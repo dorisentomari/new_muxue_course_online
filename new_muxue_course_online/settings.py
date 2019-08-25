@@ -63,7 +63,7 @@ ROOT_URLCONF = 'new_muxue_course_online.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -125,8 +125,14 @@ USE_L10N = True
 
 USE_TZ = False
 
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/2.2/howto/static-files/
-
+# 必须配置的属性，而且属性值不能为空，如果没有STATICFILES_DIRS，则STATIC_URL只能识别App里的static静态资源文件
 STATIC_URL = '/static/'
+
+# 可选配置属性，属性值为列表或元组，每个元素代表一个静态资源文件夹，可自行命名
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static')
+]
+
+MEDIA_URL = '/media/'
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

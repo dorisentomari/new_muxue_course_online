@@ -11,3 +11,8 @@
 + 安装，直接使用 pip 安装报错，所以 `pip install https://codeload.github.com/sshwsfc/xadmin/zip/django2`
 + 在 settings.py 中注册应用 `xadmin` 和 `crispy_forms`
 + 然后执行 `makemigrations` 和 `migrate` 命令
++ 在每一个 app 下新建一个 adminx.py 文件
+
+
+
+

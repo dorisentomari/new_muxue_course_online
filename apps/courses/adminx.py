@@ -19,11 +19,11 @@ class CourseResourceInline(object):
 class CourseAdmin(object):
     # 列表展示可以显示函数
     list_display = ['name', 'desc', 'detail', 'degree', 'learn_times',
-                    'student', 'fav_nums', 'click_nums','add_time', 'update_time', 'is_disable']
+                    'student', 'fav_nums', 'click_nums','create_time', 'update_time', 'is_disable']
     search_fields = ['name', 'desc', 'detail', 'degree', 'learn_times',
                      'student', 'fav_nums', 'click_nums', 'update_time', 'is_disable']
     list_filter = ['name', 'desc', 'detail', 'degree', 'learn_times',
-                   'student', 'fav_nums', 'click_nums','add_time', 'update_time', 'is_disable']
+                   'student', 'fav_nums', 'click_nums','create_time', 'update_time', 'is_disable']
     # 排序字段设置
     ordering = ['-click_nums']
     # 某些字段我们只能查看，不能修改
@@ -39,21 +39,21 @@ class CourseAdmin(object):
 
 
 class LessonAdmin(object):
-    list_display = ['course', 'name', 'add_time']
+    list_display = ['course', 'name', 'create_time']
     search_fields = ['course', 'name']
-    list_filter = ['course__name', 'name', 'add_time']
+    list_filter = ['course__name', 'name', 'create_time']
 
 
 class VideoAdmin(object):
-    list_display = ['lesson', 'name', 'url', 'add_time']
+    list_display = ['lesson', 'name', 'url', 'create_time']
     search_fields = ['lesson', 'name']
-    list_filter = ['lesson__name', 'name', 'add_time']
+    list_filter = ['lesson__name', 'name', 'create_time']
 
 
 class CourseResourceAdmin(object):
-    list_display = ['course', 'name', 'download', 'add_time']
+    list_display = ['course', 'name', 'download', 'create_time']
     search_fields = ['course', 'name']
-    list_filter = ['course__name', 'name', 'download', 'add_time']
+    list_filter = ['course__name', 'name', 'download', 'create_time']
 
 
 xadmin.site.register(Course, CourseAdmin)

@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 from django.db import models
 
-from apps.common_model import add_time, update_time, is_delete, is_disable
+from apps.common_model import create_time, update_time, is_delete, is_disable
 
 category_choices = (('pxjg', '培训机构'), ('gr', '个人'), ('gx', '高校'))
 
@@ -9,7 +9,7 @@ category_choices = (('pxjg', '培训机构'), ('gr', '个人'), ('gx', '高校')
 class CityDict(models.Model):
     name = models.CharField(max_length=20, verbose_name=u'城市')
     desc = models.CharField(max_length=200, verbose_name=u'描述')
-    add_time = add_time
+    create_time = create_time
     update_time = update_time
     is_disable = is_disable
     is_delete = is_delete
@@ -33,7 +33,7 @@ class CourseOrg(models.Model):
     address = models.CharField(max_length=150, verbose_name=u'机构地址')
     students = models.IntegerField(verbose_name=u'学习人数', default=0)
     course_nums = models.IntegerField(verbose_name=u'课程数量', default=0)
-    add_time = add_time
+    create_time = create_time
     update_time = update_time
     is_disable = is_disable
     is_delete = is_delete
@@ -57,7 +57,7 @@ class Teacher(models.Model):
     points = models.CharField(max_length=50, verbose_name=u'教学特点')
     click_num = models.IntegerField(verbose_name=u'点击数量', default=0)
     fav_num = models.IntegerField(verbose_name=u'收藏数量', default=0)
-    add_time = add_time
+    create_time = create_time
     update_time = update_time
     is_disable = is_disable
     is_delete = is_delete

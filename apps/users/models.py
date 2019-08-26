@@ -5,7 +5,7 @@ from django.db import models
 # AbstractUser是数据库中auth_user数据表里的字段
 from django.contrib.auth.models import AbstractUser
 
-from apps.common_model import add_time, update_time, is_delete, is_disable
+from apps.common_model import create_time, update_time, is_delete, is_disable
 
 # Create your models here.
 
@@ -20,7 +20,7 @@ class UserProfile(AbstractUser):
     address = models.CharField(max_length=100, default=u'')
     mobile = models.CharField(max_length=11, null=True, blank=True)
     image = models.ImageField(max_length=100, upload_to='image/%Y/%m', default=u'image/default.png')
-    add_time = add_time
+    create_time = create_time
     update_time = update_time
     is_disable = is_disable
     is_delete = is_delete
@@ -54,7 +54,7 @@ class Banner(models.Model):
     image = models.ImageField(upload_to='banner/%Y/%m', verbose_name=u'轮播图', max_length=100)
     url = models.URLField(max_length=200, verbose_name=u'访问地址')
     index = models.IntegerField(default=100, verbose_name=u'轮播图顺序')
-    add_time = add_time
+    create_time = create_time
     update_time = update_time
     is_disable = is_disable
     is_delete = is_delete

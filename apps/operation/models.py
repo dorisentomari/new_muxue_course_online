@@ -5,7 +5,7 @@ from django.db import models
 
 from users.models import UserProfile
 from courses.models import Course
-from apps.common_model import add_time, update_time, is_delete, is_disable
+from apps.common_model import create_time, update_time, is_delete, is_disable
 
 
 # 用户咨询
@@ -13,7 +13,7 @@ class UserAsk(models.Model):
     name = models.CharField(max_length=20, verbose_name=u'姓名')
     mobile = models.CharField(max_length=11, verbose_name=u'手机号')
     course_name = models.CharField(max_length=50, verbose_name=u'课程名')
-    add_time = add_time
+    create_time = create_time
     update_time = update_time
     is_disable = is_disable
     is_delete = is_delete
@@ -31,7 +31,7 @@ class CourseComment(models.Model):
     user = models.ForeignKey(UserProfile, verbose_name=u'用户', on_delete=models.CASCADE)
     course = models.ForeignKey(Course, verbose_name=u'课程', on_delete=models.CASCADE)
     comments = models.CharField(max_length=200, verbose_name=u'评论')
-    add_time = add_time
+    create_time = create_time
     update_time = update_time
     is_disable = is_disable
     is_delete = is_delete
@@ -49,7 +49,7 @@ class UserFavorite(models.Model):
     user = models.ForeignKey(UserProfile, verbose_name=u'用户', on_delete=models.CASCADE)
     fav_id = models.IntegerField(default=0, verbose_name=u'数据id')
     fav_type = models.IntegerField(choices=((1, '课程'), (2, '课程机构'), (3, '讲师名称')), verbose_name='类型')
-    add_time = add_time
+    create_time = create_time
     update_time = update_time
     is_disable = is_disable
     is_delete = is_delete
@@ -67,7 +67,7 @@ class UserMessage(models.Model):
     user = models.IntegerField(verbose_name=u'用户', default=0)
     message = models.CharField(max_length=500, verbose_name='消息内容')
     has_read = models.BooleanField(verbose_name=u'是否已读', default=False)
-    add_time = add_time
+    create_time = create_time
     update_time = update_time
     is_disable = is_disable
     is_delete = is_delete
@@ -84,7 +84,7 @@ class UserMessage(models.Model):
 class UserCourse(models.Model):
     user = models.ForeignKey(UserProfile, verbose_name=u'用户', on_delete=models.CASCADE)
     course = models.ForeignKey(Course, verbose_name=u'课程', on_delete=models.CASCADE)
-    add_time = add_time
+    create_time = create_time
     update_time = update_time
     is_disable = is_disable
     is_delete = is_delete

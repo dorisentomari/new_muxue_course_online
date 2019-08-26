@@ -4,7 +4,7 @@ from datetime import datetime
 from django.db import models
 
 from organization.models import CourseOrg, Teacher
-from apps.common_model import add_time, update_time, is_delete, is_disable
+from apps.common_model import create_time, update_time, is_delete, is_disable
 
 
 # 每一个课程
@@ -24,7 +24,7 @@ class Course(models.Model):
     click_nums = models.IntegerField(verbose_name='点击次数', default=0)
     need_know = models.CharField(max_length=300, verbose_name='课程须知', default='')
     tell_you = models.CharField(max_length=300, verbose_name='你能学到什么', default='')
-    add_time = add_time
+    create_time = create_time
     update_time = update_time
     is_disable = is_disable
     is_delete = is_delete
@@ -41,7 +41,7 @@ class Course(models.Model):
 class Lesson(models.Model):
     course = models.ForeignKey(Course, verbose_name=u'课程', on_delete=models.CASCADE)
     name = models.CharField(max_length=100, verbose_name=u'章节名称', blank=False)
-    add_time = add_time
+    create_time = create_time
     update_time = update_time
     is_disable = is_disable
     is_delete = is_delete
@@ -60,7 +60,7 @@ class Video(models.Model):
     name = models.CharField(max_length=100, verbose_name=u'视频名称')
     url = models.CharField(max_length=200, verbose_name=u'访问地址')
     learn_times = models.IntegerField(verbose_name='学习次数', default=0)
-    add_time = add_time
+    create_time = create_time
     update_time = update_time
     is_disable = is_disable
     is_delete = is_delete
@@ -78,7 +78,7 @@ class CourseResource(models.Model):
     course = models.ForeignKey(Course, verbose_name=u'课程', on_delete=models.CASCADE)
     name = models.CharField(max_length=100, verbose_name=u'名称')
     download = models.FileField(max_length=100, verbose_name='资源文件', upload_to='course/resource/%Y/%m')
-    add_time = add_time
+    create_time = create_time
     update_time = update_time
     is_disable = is_disable
     is_delete = is_delete

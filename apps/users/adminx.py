@@ -35,9 +35,9 @@ class EmailVerifyRecordAdmin(object):
 
 
 class BannerAdmin(object):
-    list_display = ['title', 'image', 'url', 'index', 'add_time']
+    list_display = ['title', 'image', 'url', 'index', 'create_time']
     search_fields = ['title', 'image', 'url', 'index']
-    list_filter = ['title', 'image', 'url', 'index', 'add_time']
+    list_filter = ['title', 'image', 'url', 'index', 'create_time']
 
 
 # 修改全局主题样式
@@ -54,6 +54,10 @@ class GlobalSettings(object):
     menu_style = 'accordion'
 
 
+class IndexViewSettings(object):
+    title = '工作台'
+
+
 xadmin.site.register(EmailVerifyRecord, EmailVerifyRecordAdmin)
 xadmin.site.register(Banner, BannerAdmin)
 # xadmin.site.register(UserProfile)
@@ -61,3 +65,4 @@ xadmin.site.register(Banner, BannerAdmin)
 
 xadmin.site.register(views.BaseAdminView, BaseSetting)
 xadmin.site.register(views.CommAdminView, GlobalSettings)
+xadmin.site.register(views.IndexView, IndexViewSettings)

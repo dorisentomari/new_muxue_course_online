@@ -19,7 +19,7 @@ class UserProfileAdmin(UserAdmin):
                     Fieldset(_('Important dates'), 'last_login', 'date_joined'),
                 ),
                 Side(
-                    Fieldset(_('Status'), 'is_active', 'is_staff', 'is_superuser', ),
+                    Fieldset(_('Status'), 'is_disable', 'is_staff', 'is_superuser', ),
                 )
             )
         return super(UserAdmin, self).get_form_layout()
@@ -31,13 +31,16 @@ class EmailVerifyRecordAdmin(object):
     # 可以在搜索框进行搜索的字段
     search_fields = ['code', 'email', 'send_type']
     # 过滤搜索的字段，在页面上显示的是值
-    list_filter = ['code', 'email', 'send_type', 'send_time']
+    list_filter = list_display
 
 
 class BannerAdmin(object):
-    list_display = ['title', 'image', 'url', 'index', 'create_time']
+    list_display = ['title', 'image', 'url', 'index', 'create_time', 'update_time']
     search_fields = ['title', 'image', 'url', 'index']
-    list_filter = ['title', 'image', 'url', 'index', 'create_time']
+    list_filter = list_display
+    readonly_fields = ['create_time', 'update_time']
+    list_editable = ['title', 'image', 'url', 'index']
+    show_bookmarks = False
 
 
 # 修改全局主题样式
@@ -60,8 +63,8 @@ class IndexViewSettings(object):
 
 xadmin.site.register(EmailVerifyRecord, EmailVerifyRecordAdmin)
 xadmin.site.register(Banner, BannerAdmin)
-# xadmin.site.register(UserProfile)
-# xadmin.site.register(UserProfile, UserProfileAdmin)
+xadmin.site.unregister(UserProfile)
+xadmin.site.register(UserProfile, UserProfileAdmin)
 
 xadmin.site.register(views.BaseAdminView, BaseSetting)
 xadmin.site.register(views.CommAdminView, GlobalSettings)

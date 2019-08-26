@@ -29,6 +29,7 @@ class Course(models.Model):
     is_disable = is_disable
     is_delete = is_delete
 
+
     class Meta:
         verbose_name = '课程'
         verbose_name_plural = verbose_name

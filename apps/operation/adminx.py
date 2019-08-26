@@ -6,33 +6,47 @@ from .models import UserAsk, CourseComment, UserFavorite, UserMessage, UserCours
 
 
 class UserAskAdmin(object):
-    list_display = ['name', 'mobile', 'course_name', 'create_time']
-    search_fields = ['name', 'mobile', 'course_name']
-    list_filter = ['name', 'mobile', 'course_name', 'create_time']
+    list_display = ['name', 'mobile', 'course_name', 'is_disable', 'create_time', 'update_time']
+    search_fields = list_display
+    list_filter = list_display
+    readonly_fields = ['create_time', 'update_time']
+    list_editable = ['name', 'mobile']
+    show_bookmarks = False
 
 
 class CourseCommentAdmin(object):
-    list_display = ['user', 'course', 'comments', 'create_time']
-    search_fields = ['user', 'course', 'comments']
-    list_filter = ['user', 'course', 'comments', 'create_time']
+    list_display = ['user', 'course', 'comments', 'is_disable', 'create_time', 'update_time']
+    search_fields = list_display
+    list_filter = list_display
+    readonly_fields = ['create_time', 'update_time']
+    list_editable = ['comments']
+    show_bookmarks = False
 
 
 class UserFavoriteAdmin(object):
-    list_display = ['user', 'fav_id', 'fav_type', 'create_time']
-    search_fields = ['user', 'fav_id', 'fav_type']
-    list_filter = ['user', 'fav_id', 'fav_type', 'create_time']
+    list_display = ['user', 'fav_id', 'fav_type', 'is_disable', 'create_time', 'update_time']
+    search_fields = list_display
+    list_filter = list_display
+    readonly_fields = ['create_time', 'update_time']
+    list_editable = ['fav_type']
+    show_bookmarks = False
 
 
 class UserMessageAdmin(object):
-    list_display = ['user', 'message', 'has_read', 'create_time']
-    search_fields = ['user', 'message', 'has_read']
-    list_filter = ['user', 'message', 'has_read', 'create_time']
+    list_display = ['user', 'message', 'has_read', 'is_disable', 'create_time', 'update_time']
+    search_fields = list_display
+    list_filter = list_display
+    readonly_fields = ['create_time', 'update_time']
+    list_editable = ['message']
+    show_bookmarks = False
 
 
 class UserCourseAdmin(object):
-    list_display = ['user', 'course', 'create_time']
-    search_fields = ['user', 'course']
-    list_filter = ['user', 'course', 'create_time']
+    list_display = ['user', 'course', 'is_disable', 'create_time', 'update_time']
+    search_fields = list_display
+    list_filter = list_display
+    readonly_fields = ['create_time', 'update_time']
+    show_bookmarks = False
 
 
 xadmin.site.register(UserAsk, UserAskAdmin)

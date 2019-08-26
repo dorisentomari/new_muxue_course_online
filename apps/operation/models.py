@@ -1,6 +1,4 @@
 # -*- encoding: utf-8 -*-
-from datetime import datetime
-
 from django.db import models
 
 from users.models import UserProfile

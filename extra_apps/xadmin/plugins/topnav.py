@@ -35,7 +35,8 @@ class TopNavPlugin(BaseAdminPlugin):
                 if getattr(self.admin_site._registry[model], 'search_fields', None):
                     try:
                         search_models.append({
-                            'title': _('Search %s') % capfirst(model._meta.verbose_name_plural),
+                            # 'title': _('Search %s') % capfirst(model._meta.verbose_name_plural),
+                            'title': model._meta.verbose_name_plural,
                             'url': reverse('xadmin:%s_%s_changelist' % info, current_app=site_name),
                             'model': model
                         })

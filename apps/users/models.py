@@ -15,9 +15,9 @@ send_type_choices = (('register', u'注册'), ('forget', u'找回密码'))
 
 class UserProfile(AbstractUser):
     nickname = models.CharField(max_length=50, verbose_name=u'昵称', default=u'')
-    birthday = models.DateField(verbose_name=u'生日', null=True, blank=True)
+    birthday = models.DateField(verbose_name=u'生日', null=True, blank=True, default=datetime.now)
     gender = models.CharField(max_length=10, choices=gender_choices, default=u'')
-    address = models.CharField(max_length=100, default=u'')
+    address = models.CharField(max_length=100, default=u'', null=True)
     mobile = models.CharField(max_length=11, null=True, blank=True)
     image = models.ImageField(max_length=100, upload_to='image/%Y/%m', default=u'image/default.png')
     create_time = create_time

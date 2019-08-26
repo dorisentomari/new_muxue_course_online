@@ -26,7 +26,8 @@ class Row(layout.Div):
         super(Row, self).__init__(css_class=css_class, *new_fields, **kwargs)
 
     def convert_field(self, f, counts):
-        col_class = "col-sm-%d" % int(math.ceil(12 / counts))
+        # col_class = "col-sm-%d" % int(math.ceil(12 / counts))
+        col_class = "col-sm-6"
         if not (isinstance(f, Field) or issubclass(f.__class__, Field)):
             f = layout.Field(f)
         if f.wrapper_class:

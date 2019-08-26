@@ -4,24 +4,24 @@
 {% load import_export_tags %}
 
 {% block breadcrumbs_last %}
-{% trans "Export" %}
+  {% trans "Export" %}
 {% endblock %}
 {% load xadmin_tags %}
 
 {% block breadcrumbs %}
-    <ul class="breadcrumb">
-        <li><a href="{% url 'xadmin:index' %}">{% trans 'Home' %}</a></li>
-        <li><a href="{% url opts|admin_urlname:'changelist' %}">{{ opts.verbose_name_plural|capfirst }}</a></li>
-        <li>{% trans 'Export' %}</li>
-    </ul>
+  <ul class="breadcrumb">
+    <li><a href="{% url 'xadmin:index' %}">{% trans 'Home' %}</a></li>
+    <li><a href="{% url opts|admin_urlname:'changelist' %}">{{ opts.verbose_name_plural|capfirst }}</a></li>
+    <li>{% trans 'Export' %}</li>
+  </ul>
 {% endblock %}
 {% block nav_title %}
-    <i class="glyphicon glyphicon-import"></i> {{title}}
+  <i class="glyphicon glyphicon-import"></i> {{ title }}
 {% endblock %}
 
 {% block content %}
-<form action="" method="POST">
-  {% csrf_token %}
+  <form action="" method="POST">
+    {% csrf_token %}
 
     <fieldset class="module aligned">
       {% for field in form %}
@@ -33,7 +33,7 @@
           {{ field }}
 
           {% if field.field.help_text %}
-          <p class="help">{{ field.field.help_text|safe }}</p>
+            <p class="help">{{ field.field.help_text|safe }}</p>
           {% endif %}
         </div>
       {% endfor %}
@@ -42,5 +42,5 @@
     <div class="submit-row">
       <input type="submit" class="default btn btn-primary" value="{% trans "Submit" %}">
     </div>
-</form>
+  </form>
 {% endblock %}

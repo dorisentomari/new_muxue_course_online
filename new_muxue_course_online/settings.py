@@ -12,6 +12,11 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 
 import os, sys
 
+try:
+    from config_env import MYSQL_INFO, EMAIL_INFO
+except:
+    from config_env_default import MYSQL_INFO, EMAIL_INFO
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(BASE_DIR, 'apps'))
@@ -28,7 +33,9 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
+AUTHENTICATION_BACKENDS = (
+    'users.views.CustomBackend',
+)
 # Application definition
 
 INSTALLED_APPS = [
@@ -44,6 +51,7 @@ INSTALLED_APPS = [
     'organization',
     'xadmin',
     'crispy_forms',
+    'captcha',
 ]
 
 AUTH_USER_MODEL = 'users.UserProfile'
@@ -78,23 +86,16 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'new_muxue_course_online.wsgi.application'
 
-
-# Database
-# https://docs.djangoproject.com/en/2.2/ref/settings/#databases
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'muxue_course',
-        'USER': 'root',
-        'PASSWORD': '123456',
-        'HOST': '127.0.0.1'
+        'NAME': MYSQL_INFO['NAME'],
+        'USER': MYSQL_INFO['USER'],
+        'PASSWORD': MYSQL_INFO['PASSWORD'],
+        'HOST': MYSQL_INFO['HOST']
     }
 }
 
-
-# Password validation
-# https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -110,10 +111,6 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-
-
-# Internationalization
-# https://docs.djangoproject.com/en/2.2/topics/i18n/
 
 LANGUAGE_CODE = 'zh-hans'
 
@@ -132,6 +129,13 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static')
 ]
+
+EMAIL_HOST = EMAIL_INFO['EMAIL_HOST']
+EMAIL_PORT = EMAIL_INFO['EMAIL_PORT']
+EMAIL_HOST_USER = EMAIL_INFO['EMAIL_HOST_USER']
+EMAIL_HOST_PASSWORD = EMAIL_INFO['EMAIL_HOST_PASSWORD']
+EMAIL_USE_TLS = EMAIL_INFO['EMAIL_USE_TLS']
+EMAIL_FROM = EMAIL_INFO['EMAIL_FROM']
 
 MEDIA_URL = '/media/'
 

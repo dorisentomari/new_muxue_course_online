@@ -18,7 +18,7 @@ def generate_random_str(random_length=8):
 
 def send_register_email(email, send_type='register'):
     email_record = EmailVerifyRecord()
-    code = generate_random_str(16)
+    code = generate_random_str(18)
     email_record.code = code
     email_record.email = email
     email_record.send_type = send_type
@@ -30,6 +30,6 @@ def send_register_email(email, send_type='register'):
         try:
             send_status = send_mail(email_title, email_body, EMAIL_FROM, [email])
             if send_status:
-                pass
+                return True
         except:
-            pass
+            return False

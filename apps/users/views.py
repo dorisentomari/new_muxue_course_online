@@ -5,9 +5,10 @@ from django.contrib.auth.hashers import make_password
 from django.db.models import Q
 from django.views.generic import View
 
-from .models import UserProfile
+from .models import UserProfile, EmailVerifyRecord
 from .forms import LoginForm, RegisterForm
 from apps.utils.email_send import send_register_email
+
 
 class CustomBackend(ModelBackend):
     def authenticate(self, request, username=None, password=None, **kwargs):
@@ -67,9 +68,26 @@ class RegisterView(View):
             user_profile.username = username
             user_profile.email = username
             user_profile.password = make_password(password)
-            user_profile.is_active = True
+            user_profile.is_active = False
             user_profile.save()
 
             send_register_email(username, 'register')
 
             return render(request, 'login.html', {})
+
+
+class ActiveUserView(View):
+    def get(self, request, active_code):
+        all_records = EmailVerifyRecord.objects.filter(code=active_code)
+        if all_records:
+            for record in all_records:
+                email = record.email
+                user = UserProfile.objects.get(email=email)
+                user.is_active = True
+                user.save()
+            return render(request, 'login.html')
+        else:
+            return render(request, 'active.html')
+
+
+

@@ -159,6 +159,4 @@ class ModifyView(View):
             record = record.first()
             record.is_delete = True
             record.save()
-        # record.is_delete = True
-        # record.save()
         return render(request, 'login.html')

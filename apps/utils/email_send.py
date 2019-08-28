@@ -33,3 +33,13 @@ def send_register_email(email, send_type='register'):
                 return True
         except:
             return False
+
+    elif send_type == 'forget':
+        email_title = '慕雪在线网密码重置'
+        email_body = '请点击下边的链接重置您的账号:http://127.0.0.1:8000/reset/{0}'.format(code)
+        try:
+            send_status = send_mail(email_title, email_body, EMAIL_FROM, [email])
+            if send_status:
+                return True
+        except:
+            return False

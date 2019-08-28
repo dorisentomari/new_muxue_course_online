@@ -6,7 +6,7 @@ from django.db.models import Q
 from django.views.generic import View
 
 from .models import UserProfile, EmailVerifyRecord
-from .forms import LoginForm, RegisterForm
+from .forms import LoginForm, RegisterForm, ForgetPasswordForm, ModifyPasswordForm
 from apps.utils.email_send import send_register_email
 
 
@@ -78,16 +78,87 @@ class RegisterView(View):
 
 class ActiveUserView(View):
     def get(self, request, active_code):
-        all_records = EmailVerifyRecord.objects.filter(code=active_code)
-        if all_records:
-            for record in all_records:
-                email = record.email
-                user = UserProfile.objects.get(email=email)
-                user.is_active = True
-                user.save()
+        record = EmailVerifyRecord.objects.filter(code=active_code).first()
+        if record:
+            email = record.email
+            user = UserProfile.objects.get(email=email)
+            user.is_active = True
+            user.save()
             return render(request, 'login.html')
         else:
             return render(request, 'active.html')
 
 
+class ForgetPasswordView(View):
+    def get(self, request):
+        forget_form = ForgetPasswordForm()
+        return render(request, 'forgetpwd.html', {
+            'forget_form': forget_form
+        })
 
+    def post(self, request):
+        forget_form = ForgetPasswordForm(request.POST)
+        if forget_form.is_valid() is not True:
+            return render(request, 'forgetpwd.html', {
+                'forget_form': forget_form
+            })
+        email = request.POST.get('email', '')
+        send_register_email(email, 'forget')
+        return render(request, 'send_success.html')
+
+
+class ResetView(View):
+    def get(self, request, active_code):
+        record = EmailVerifyRecord.objects.filter(code=active_code).first()
+        print(record)
+        if record:
+            if record.is_delete is True:
+                print('msg', '验证码已失效')
+                return render(request, 'password_reset.html', {
+                    'active_code': active_code,
+                    'msg': '验证码已失效',
+                    'is_expire': True
+                })
+            else:
+                email = record.email
+                print('email', email)
+                return render(request, 'password_reset.html', {
+                    'email': email,
+                    'active_code': active_code,
+                })
+        else:
+            return render(request, 'active.html')
+
+
+class ModifyView(View):
+    def post(self, request):
+        modify_form = ModifyPasswordForm(request.POST)
+        email = request.POST.get('email', '')
+        active_code = request.POST.get('active_code', '')
+
+        if modify_form.is_valid() is not True:
+            return render(request, 'password_reset.html', {
+                'email': email,
+                'modify_form': modify_form
+            })
+
+        password1 = request.POST.get('password1', '')
+        password2 = request.POST.get('password2', '')
+
+        if password1 != password2:
+            return render(request, 'password_reset.html', {
+                'email': email,
+                'msg': '两次输入的密码不一致'
+            })
+
+        user = UserProfile.objects.filter(email=email).first()
+        user.password = make_password(password1)
+        user.save()
+        record = EmailVerifyRecord.objects.filter(code=active_code)
+        if record:
+            record = record.first()
+            record.is_delete = True
+            record.save()
+        # record.is_delete = True
+        # record.save()
+        return render(request, 'login.html')

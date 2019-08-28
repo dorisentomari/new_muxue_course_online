@@ -56,6 +56,8 @@ INSTALLED_APPS = [
 
 AUTH_USER_MODEL = 'users.UserProfile'
 
+HTML_MINIFY = True
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -64,6 +66,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'htmlmin.middleware.HtmlMinifyMiddleware',
+    'htmlmin.middleware.MarkRequestMiddleware',
 ]
 
 ROOT_URLCONF = 'new_muxue_course_online.urls'
@@ -122,7 +126,7 @@ USE_L10N = True
 
 USE_TZ = False
 
-# 必须配置的属性，而且属性值不能为空，如果没有STATICFILES_DIRS，则STATIC_URL只能识别App里的static静态资源文件
+# 必须配置的属性，而且属性值不能为空，如果没有 STATICFILES_DIRS，则 STATIC_URL 只能识别App里的static静态资源文件
 STATIC_URL = '/static/'
 
 # 可选配置属性，属性值为列表或元组，每个元素代表一个静态资源文件夹，可自行命名
@@ -130,13 +134,18 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static')
 ]
 
-EMAIL_HOST = EMAIL_INFO['EMAIL_HOST']
-EMAIL_PORT = EMAIL_INFO['EMAIL_PORT']
-EMAIL_HOST_USER = EMAIL_INFO['EMAIL_HOST_USER']
-EMAIL_HOST_PASSWORD = EMAIL_INFO['EMAIL_HOST_PASSWORD']
-EMAIL_USE_TLS = EMAIL_INFO['EMAIL_USE_TLS']
-EMAIL_FROM = EMAIL_INFO['EMAIL_FROM']
-
 MEDIA_URL = '/media/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+EMAIL_HOST = EMAIL_INFO['EMAIL_HOST']
+
+EMAIL_PORT = EMAIL_INFO['EMAIL_PORT']
+
+EMAIL_HOST_USER = EMAIL_INFO['EMAIL_HOST_USER']
+
+EMAIL_HOST_PASSWORD = EMAIL_INFO['EMAIL_HOST_PASSWORD']
+
+EMAIL_USE_TLS = EMAIL_INFO['EMAIL_USE_TLS']
+
+EMAIL_FROM = EMAIL_INFO['EMAIL_FROM']

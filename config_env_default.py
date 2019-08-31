@@ -3,7 +3,7 @@
 MYSQL_INFO = {
     'NAME': 'muxue_course',
     'USER': 'root',
-    'PASSWORD': '',
+    'PASSWORD': '123456',
     'HOST': '127.0.0.1',
 }
 

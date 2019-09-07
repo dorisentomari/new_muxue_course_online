@@ -1,9 +1,11 @@
 from django.shortcuts import render
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.backends import ModelBackend
 from django.contrib.auth.hashers import make_password
+from django.http import HttpResponseRedirect, JsonResponse
 from django.db.models import Q
 from django.views.generic import View
+from django.urls import reverse
 
 from .models import UserProfile, EmailVerifyRecord
 from .forms import LoginForm, RegisterForm, ForgetPasswordForm, ModifyPasswordForm
@@ -20,8 +22,11 @@ class CustomBackend(ModelBackend):
             return None
 
 
+# 用户登录
 class LoginView(View):
     def get(self, request):
+        if request.user.is_authenticated:
+            return HttpResponseRedirect(reverse("index"))
         return render(request, 'login.html', {})
 
     def post(self, request):
@@ -36,11 +41,19 @@ class LoginView(View):
             user = authenticate(username=username, password=password)
             if user is not None:
                 login(request, user)
-                return render(request, 'index.html')
+                return HttpResponseRedirect(reverse('index'))
             else:
                 return render(request, 'login.html', {
-                    'login_form': login_form
+                    'login_form': login_form,
+                    'msg': '用户名或密码错误'
                 })
+
+
+# 用户退出
+class LogoutView(View):
+    def get(self, request):
+        logout(request)
+        return HttpResponseRedirect(reverse("index"))
 
 
 class RegisterView(View):

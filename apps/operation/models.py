@@ -1,22 +1,19 @@
 # -*- encoding: utf-8 -*-
 from django.db import models
+from django.contrib.auth import get_user_model
 
-from users.models import UserProfile
 from courses.models import Course
-from apps.common_model import create_time, update_time, is_delete, is_disable
+from common_model import BaseModel
 
-FAV_TYPE_CHOICES = ((1, '课程'), (2, '课程机构'), (3, '讲师名称'))
+UserProfile = get_user_model()
+FAV_TYPE_CHOICES = ((1, '课程'), (2, '机构'), (3, '讲师'))
 
 
 # 用户咨询
-class UserAsk(models.Model):
+class UserAsk(BaseModel):
     name = models.CharField(verbose_name=u'姓名', max_length=20)
     mobile = models.CharField(verbose_name=u'手机号', max_length=11)
     course_name = models.CharField(verbose_name=u'课程名', max_length=50)
-    create_time = create_time
-    update_time = update_time
-    is_disable = is_disable
-    is_delete = is_delete
 
     class Meta:
         verbose_name = '用户咨询'
@@ -27,14 +24,10 @@ class UserAsk(models.Model):
 
 
 # 课程评论
-class CourseComment(models.Model):
+class CourseComment(BaseModel):
     user = models.ForeignKey(UserProfile, verbose_name=u'用户', on_delete=models.CASCADE)
     course = models.ForeignKey(Course, verbose_name=u'课程', on_delete=models.CASCADE)
     comments = models.CharField(verbose_name=u'评论', max_length=200)
-    create_time = create_time
-    update_time = update_time
-    is_disable = is_disable
-    is_delete = is_delete
 
     class Meta:
         verbose_name = u'课程评论'
@@ -45,14 +38,10 @@ class CourseComment(models.Model):
 
 
 # 用户收藏
-class UserFavorite(models.Model):
+class UserFavorite(BaseModel):
     user = models.ForeignKey(UserProfile, verbose_name=u'用户', on_delete=models.CASCADE)
     fav_id = models.IntegerField(verbose_name=u'数据id', default=0)
     fav_type = models.IntegerField(verbose_name='类型', choices=FAV_TYPE_CHOICES)
-    create_time = create_time
-    update_time = update_time
-    is_disable = is_disable
-    is_delete = is_delete
 
     class Meta:
         verbose_name = u'用户收藏'
@@ -63,14 +52,10 @@ class UserFavorite(models.Model):
 
 
 # 用户信息
-class UserMessage(models.Model):
+class UserMessage(BaseModel):
     user = models.IntegerField(verbose_name=u'用户', default=0)
     message = models.CharField(verbose_name='消息内容', max_length=500)
     has_read = models.BooleanField(verbose_name=u'是否已读', default=False)
-    create_time = create_time
-    update_time = update_time
-    is_disable = is_disable
-    is_delete = is_delete
 
     class Meta:
         verbose_name = u'用户信息'
@@ -81,13 +66,9 @@ class UserMessage(models.Model):
 
 
 # 用户课程
-class UserCourse(models.Model):
+class UserCourse(BaseModel):
     user = models.ForeignKey(UserProfile, verbose_name=u'用户', on_delete=models.CASCADE)
     course = models.ForeignKey(Course, verbose_name=u'课程', on_delete=models.CASCADE)
-    create_time = create_time
-    update_time = update_time
-    is_disable = is_disable
-    is_delete = is_delete
 
     class Meta:
         verbose_name = u'用户课程'

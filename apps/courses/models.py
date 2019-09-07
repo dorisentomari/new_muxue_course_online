@@ -3,11 +3,11 @@
 from django.db import models
 
 from organization.models import CourseOrg, Teacher
-from apps.common_model import create_time, update_time, is_delete, is_disable
+from common_model import BaseModel
 
 
 # 每一个课程
-class Course(models.Model):
+class Course(BaseModel):
     name = models.CharField(verbose_name=u'课程名字', max_length=50, blank=False)
     desc = models.CharField(verbose_name=u'课程描述', max_length=300, blank=True, default='')
     course_org = models.ForeignKey(CourseOrg, verbose_name=u'课程机构', null=True, blank=True, on_delete=models.CASCADE)
@@ -23,10 +23,6 @@ class Course(models.Model):
     click_nums = models.IntegerField(verbose_name=u'点击次数', default=0)
     need_know = models.CharField(verbose_name=u'课程须知', max_length=300, default='')
     tell_you = models.CharField(verbose_name=u'你能学到什么', max_length=300, default='')
-    create_time = create_time
-    update_time = update_time
-    is_disable = is_disable
-    is_delete = is_delete
 
     class Meta:
         verbose_name = '课程'
@@ -37,13 +33,9 @@ class Course(models.Model):
 
 
 # 每一个章节
-class Lesson(models.Model):
+class Lesson(BaseModel):
     course = models.ForeignKey(Course, verbose_name=u'课程', on_delete=models.CASCADE)
     name = models.CharField(verbose_name=u'章节名称', max_length=100, blank=False)
-    create_time = create_time
-    update_time = update_time
-    is_disable = is_disable
-    is_delete = is_delete
 
     class Meta:
         verbose_name = '章节'
@@ -54,15 +46,11 @@ class Lesson(models.Model):
 
 
 # 每一个视频资源
-class Video(models.Model):
+class Video(BaseModel):
     lesson = models.ForeignKey(Lesson, verbose_name=u'章节', on_delete=models.CASCADE)
     name = models.CharField(verbose_name=u'视频名称', max_length=100)
     url = models.CharField(verbose_name=u'访问地址', max_length=200)
     learn_times = models.IntegerField(verbose_name='学习次数', default=0)
-    create_time = create_time
-    update_time = update_time
-    is_disable = is_disable
-    is_delete = is_delete
 
     class Meta:
         verbose_name = u'视频'
@@ -73,14 +61,10 @@ class Video(models.Model):
 
 
 # 每一个课程资源
-class CourseResource(models.Model):
+class CourseResource(BaseModel):
     course = models.ForeignKey(Course, verbose_name=u'课程', on_delete=models.CASCADE)
     name = models.CharField(verbose_name=u'名称', max_length=100)
-    download = models.FileField(verbose_name='资源文件', max_length=100, upload_to='course/resource/%Y/%m')
-    create_time = create_time
-    update_time = update_time
-    is_disable = is_disable
-    is_delete = is_delete
+    file = models.FileField(verbose_name=u'资源文件', max_length=100, upload_to='course/resource/%Y/%m')
 
     class Meta:
         verbose_name = u'课程资源'

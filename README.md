@@ -7,3 +7,4 @@
 + [Django 2 By Example](http://www.conyli.cc/chapter01.html)
 + [Django2.2教程](http://www.liujiangblog.com/)
 + [xadmin的变量](http://www.lybbn.cn/data/bbsdatas.php?lybbs=62)
++ [session和cookie](https://www.zhihu.com/question/19786827)

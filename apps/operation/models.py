@@ -5,12 +5,14 @@ from users.models import UserProfile
 from courses.models import Course
 from apps.common_model import create_time, update_time, is_delete, is_disable
 
+FAV_TYPE_CHOICES = ((1, '课程'), (2, '课程机构'), (3, '讲师名称'))
+
 
 # 用户咨询
 class UserAsk(models.Model):
-    name = models.CharField(max_length=20, verbose_name=u'姓名')
-    mobile = models.CharField(max_length=11, verbose_name=u'手机号')
-    course_name = models.CharField(max_length=50, verbose_name=u'课程名')
+    name = models.CharField(verbose_name=u'姓名', max_length=20)
+    mobile = models.CharField(verbose_name=u'手机号', max_length=11)
+    course_name = models.CharField(verbose_name=u'课程名', max_length=50)
     create_time = create_time
     update_time = update_time
     is_disable = is_disable
@@ -28,7 +30,7 @@ class UserAsk(models.Model):
 class CourseComment(models.Model):
     user = models.ForeignKey(UserProfile, verbose_name=u'用户', on_delete=models.CASCADE)
     course = models.ForeignKey(Course, verbose_name=u'课程', on_delete=models.CASCADE)
-    comments = models.CharField(max_length=200, verbose_name=u'评论')
+    comments = models.CharField(verbose_name=u'评论', max_length=200)
     create_time = create_time
     update_time = update_time
     is_disable = is_disable
@@ -45,8 +47,8 @@ class CourseComment(models.Model):
 # 用户收藏
 class UserFavorite(models.Model):
     user = models.ForeignKey(UserProfile, verbose_name=u'用户', on_delete=models.CASCADE)
-    fav_id = models.IntegerField(default=0, verbose_name=u'数据id')
-    fav_type = models.IntegerField(choices=((1, '课程'), (2, '课程机构'), (3, '讲师名称')), verbose_name='类型')
+    fav_id = models.IntegerField(verbose_name=u'数据id', default=0)
+    fav_type = models.IntegerField(verbose_name='类型', choices=FAV_TYPE_CHOICES)
     create_time = create_time
     update_time = update_time
     is_disable = is_disable
@@ -63,7 +65,7 @@ class UserFavorite(models.Model):
 # 用户信息
 class UserMessage(models.Model):
     user = models.IntegerField(verbose_name=u'用户', default=0)
-    message = models.CharField(max_length=500, verbose_name='消息内容')
+    message = models.CharField(verbose_name='消息内容', max_length=500)
     has_read = models.BooleanField(verbose_name=u'是否已读', default=False)
     create_time = create_time
     update_time = update_time

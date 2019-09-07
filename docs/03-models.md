@@ -5,6 +5,9 @@
 + `from django.db import models`
 + 在每一个 model 里，可以定义数据表需要用到的字段名，字段类型，比如说字符串字段 CharField，字段的属性
 + 类的元属性，包括数据库的名字，索引，排序，复数，联合主键等
++ 关于 null=True 和 default=''
+    + null 是针对数据库而言，如果 null=True, 表示数据库的该字段可以为空。
+    + blank 是针对表单的，如果 blank=True，表示你的表单填写该字段的时候可以不填
 
 ```python
 from datetime import datetime
@@ -37,7 +40,7 @@ class EmailVerifyRecord(models.Model):
 + 所以，我们创建的 users 表需要继承 Django 默认的 users 表
 + `from django.contrib.auth.models import AbstractUser`
 + 这里如果我们自己写的字段与默认的字段重复，那么就会重写该字段，如果没有重复，那么就创建该字段
-+ 当我们自己重写了 users，我们还要在 settings 里告诉 Django 我们要使用那个 users 表
++ 当我们自己重写了 users，我们还要在 settings 里告诉 Django 我们要使用那个 users 表，这一步是必须的，不然 Django 还是会使用自带的表，不会使用我们新建的 user 数据表
 + `AUTH_USER_MODEL = 'users.UserProfile'`
 
 ```python

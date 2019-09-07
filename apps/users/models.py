@@ -7,19 +7,17 @@ from django.contrib.auth.models import AbstractUser
 
 from apps.common_model import create_time, update_time, is_delete, is_disable
 
-# Create your models here.
-
-gender_choices = ((u'male', u'男'), (u'female', u'女'))
-send_type_choices = (('register', u'注册'), ('forget', u'找回密码'))
+GENDER_CHOICES = ((u'male', u'男'), (u'female', u'女'))
+SEND_TYPE_CHOICES = ((u'register', u'注册'), (u'forget', u'找回密码'))
 
 
 class UserProfile(AbstractUser):
-    nickname = models.CharField(max_length=50, verbose_name=u'昵称', default=u'')
-    birthday = models.DateField(verbose_name=u'生日', null=True, blank=True, default=datetime.now)
-    gender = models.CharField(max_length=10, choices=gender_choices, default=u'')
-    address = models.CharField(max_length=100, default=u'', null=True)
-    mobile = models.CharField(max_length=11, null=True, blank=True)
-    image = models.ImageField(max_length=100, upload_to='image/%Y/%m', default=u'image/default.png')
+    nickname = models.CharField(verbose_name=u'昵称', max_length=50, default=u'')
+    birthday = models.DateField(verbose_name=u'生日', null=True, blank=True)
+    gender = models.CharField(verbose_name=u'性别', max_length=6, choices=GENDER_CHOICES, default=u'')
+    address = models.CharField(verbose_name=u'地址', max_length=100, null=True, default=u'')
+    mobile = models.CharField(verbose_name=u'手机号', max_length=11, null=True, blank=True)
+    image = models.ImageField(verbose_name=u'头像', max_length=100, upload_to='image/%Y/%m', default=u'image/default.png')
     create_time = create_time
     update_time = update_time
     is_disable = is_disable
@@ -34,10 +32,10 @@ class UserProfile(AbstractUser):
 
 
 class EmailVerifyRecord(models.Model):
-    code = models.CharField(max_length=20, verbose_name=u'验证码')
-    email = models.EmailField(max_length=50, verbose_name=u'邮箱地址')
-    send_type = models.CharField(max_length=10, verbose_name='验证码类型', choices=send_type_choices)
-    send_time = models.TimeField(default=datetime.now, verbose_name='发送时间')
+    code = models.CharField(verbose_name=u'验证码', max_length=20)
+    email = models.EmailField(verbose_name=u'邮箱地址', max_length=50)
+    send_type = models.CharField(verbose_name=u'验证码类型', max_length=10, choices=SEND_TYPE_CHOICES)
+    send_time = models.TimeField(verbose_name=u'发送时间', default=datetime.now)
     is_disable = is_disable
     is_delete = is_delete
 

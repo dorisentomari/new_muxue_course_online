@@ -20,7 +20,7 @@ class UserAsk(BaseModel):
         verbose_name_plural = verbose_name
 
     def __str__(self):
-        return self.name
+        return "{name}_{course}({mobile})".format(name=self.name, course=self.course_name, mobile=self.mobile)
 
 
 # 课程评论
@@ -48,7 +48,7 @@ class UserFavorite(BaseModel):
         verbose_name_plural = verbose_name
 
     def __str__(self):
-        return '%s 被收藏' % self.fav_type
+        return "{user}_{id}".format(user=self.user.username, id=self.fav_id)
 
 
 # 用户信息

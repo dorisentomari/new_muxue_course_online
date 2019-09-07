@@ -67,9 +67,9 @@ class VideoAdmin(object):
 
 
 class CourseResourceAdmin(object):
-    list_display = ['course', 'name', 'download', 'create_time']
+    list_display = ['course', 'name', 'file', 'create_time']
     search_fields = ['course', 'name']
-    list_filter = ['course__name', 'name', 'download', 'create_time']
+    list_filter = ['course__name', 'name', 'file', 'create_time']
     show_detail_fields = ['name']
     list_editable = ['name']
     show_bookmarks = False

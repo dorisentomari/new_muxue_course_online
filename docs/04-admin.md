@@ -1,12 +1,10 @@
 # 1. 登录 admin
-
 + 创建超级用户 `python manage.py createsuperuser`
 + 然后输入用户名，邮箱，密码，创建超级用户成功
 + 访问 `http://127.0.0.1:8000/admin`，就可以登录
 + 在 admin 里显示的各项信息以及如何显示都是由 app 下的 admin.py 文件设定的
 
 # 2. 使用 xadmin 设计 admin
-
 + 使用 xadmin，原因是界面美观，功能强大。Django 自带的 admin 管理系统不够好用
 + 安装，直接使用 pip 安装报错，所以 `pip install https://codeload.github.com/sshwsfc/xadmin/zip/django2`
 + 在 settings.py 中注册应用 `xadmin` 和 `crispy_forms`
@@ -16,7 +14,6 @@
 + ps: 如果要是使用 xadmin 的时候感觉页面或者功能需要修改，可以直接把 env 里的 xadmin 剪切到 extra_apps 里，这样我们就可以对 xadmin 做自己的修改。但是需要在 settings.py 里添加 `sys.path.insert(0, os.path.join(BASE_DIR, 'extra_apps'))`
 
 # 3. 修改 adminx.py
-
 + xadmin 注册每一个 model 的时候，必须是在 models 里的类名后边添加 `Admin`，比如 models 里的 EmailVerifyRecord，在这里需要改为 EmailVerifyRecordAdmin
 + adminx.py 里类的属性
     + list_display 展示列表需要显示的字段信息
@@ -74,7 +71,6 @@ xadmin.site.register(Course, CourseAdmin)
 ```
 
 # 4. xadmin 全局属性
-
 + 全局属性的配置是固定的写法
 
 ```python

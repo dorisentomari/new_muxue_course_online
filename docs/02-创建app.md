@@ -1,5 +1,4 @@
 # 1. 创建 app
-
 app 实际上就是每一个单独的功能模块，但是不是说每一个 app 之间没有任何关系，app 之间是可以调用功能的，但是为了模块拆分，可以把不同的功能模块做成对应的 app
 
 + 创建 app，`django-admin startapp <appName>`
@@ -26,7 +25,6 @@ INSTALLED_APPS = [
 ```
 
 # 2. 修改 app 的目录结构
-
 + 如果我们要创建很多的 app，每一个 app 都放在根目录下，就会有很多文件夹，这样 app 就会与其他的文件混乱。所以为了区分，我们把所有的 app 放入 apps 文件夹下，这样代码目录结构更加清晰明了
 + 根目录下创建 apps 文件夹，然后把 users、courses、operation、organization 文件夹全部剪切到 apps 文件夹下
 + 但是 Django 默认是在根目录下寻找每一个 app 的，我们把 app 移走了，那么 Django 就找不到了， 所以我们要告诉 Django 去哪里找 app
@@ -39,7 +37,6 @@ sys.path.insert(0, os.path.join(BASE_DIR, 'apps'))
 ```
 
 # 3. 关于 Django 自带的 model
-
 + Django 默认带了很多的数据表，同时也有创建数据表的命令
 + 首先我们看两个命令，makemigrations 和 migrate
 + `python manage.py makemigrations`
@@ -87,7 +84,6 @@ mysql> show tables;
     + django_session 存储 session 表
 
 # 3. [关于app的一些介绍](http://www.conyli.cc/chapter01.html)
-
 + `admin.py`，用户将模型注册到管理后台，以便在 Django 的管理后台查看，管理后台是一个可选的应用
 + `apps.py`，当前应用的主要配置文件
 + `migrations.py`，包含应用的数据迁移记录，用来追踪数据模型的变化然后与数据库进行同步

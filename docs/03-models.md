@@ -1,12 +1,11 @@
 # 1. 创建 models
-
 + 每一个 app 下都有一个对应的 models.py，这个 models 是与该 app 直接相关的数据表模型
 + 在这个 models 里可以有多个数据表，每一个数据表都是一个类，但是这个类必须继承 Django 下 db 的 models.Model 类
 + `from django.db import models`
 + 在每一个 model 里，可以定义数据表需要用到的字段名，字段类型，比如说字符串字段 CharField，字段的属性
 + 类的元属性，包括数据库的名字，索引，排序，复数，联合主键等
 + 关于 null=True 和 default=''
-    + null 是针对数据库而言，如果 null=True, 表示数据库的该字段可以为空。
+    + null 是针对数据库而言，如果 null=True， 表示数据库的该字段可以为空。
     + blank 是针对表单的，如果 blank=True，表示你的表单填写该字段的时候可以不填
 
 ```python
@@ -33,7 +32,6 @@ class EmailVerifyRecord(models.Model):
 ```
 
 # 2. 关于 users 数据表
-
 + Django 会默认帮我们创建一个 users 数据表，叫 auth_user，里边定义了很多字段及属性，我们默认创建的用户信息，就保存在这个数据表里
 + 但是，这个数据表里的字段不一定满足我们的业务需求，所以我们需要修改/重写 users 这个数据表
 + 有一个但是，我们虽然修改/重写 users 这个数据表，但是我们还想用 Django 已经对这个数据表做好的一些操作，比如 session 等
@@ -68,7 +66,6 @@ class UserProfile(AbstractUser):
 ```
 
 # 3. models 之间的关系
-
 + org 下是 course，teacher，city
 + course 下是 lesson
 + lesson 下是 video

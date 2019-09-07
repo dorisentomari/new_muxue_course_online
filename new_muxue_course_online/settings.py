@@ -100,7 +100,6 @@ DATABASES = {
     }
 }
 
-
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -129,14 +128,15 @@ USE_TZ = False
 # 必须配置的属性，而且属性值不能为空，如果没有 STATICFILES_DIRS，则 STATIC_URL 只能识别App里的static静态资源文件
 STATIC_URL = '/static/'
 
-# 可选配置属性，属性值为列表或元组，每个元素代表一个静态资源文件夹，可自行命名
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static')
-]
-
 MEDIA_URL = '/media/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# 可选配置属性，属性值为列表或元组，每个元素代表一个静态资源文件夹，可自行命名
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+    os.path.join(BASE_DIR, 'media'),
+]
 
 EMAIL_HOST = EMAIL_INFO['EMAIL_HOST']
 

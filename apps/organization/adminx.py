@@ -6,11 +6,11 @@ from .models import CourseOrg, CityDict, Teacher
 
 
 class CityDictAdmin(object):
-    list_display = ['desc', 'name', 'is_disable', 'create_time', 'update_time']
+    list_display = ['desc', 'name', 'is_disable', 'is_delete', 'create_time', 'update_time']
     search_fields = ['desc', 'name']
     list_filter = list_display
     readonly_fields = ['create_time', 'update_time']
-    list_editable = ['desc', 'name', 'is_disable']
+    list_editable = ['desc', 'name', 'is_disable', 'is_delete']
     show_bookmarks = False
 
 

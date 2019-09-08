@@ -23,7 +23,7 @@ urlpatterns = [
     path('modify_pwd/', ModifyView.as_view(), name='modify_password'),
 
     path('org/', include(('apps.organization.urls', 'organization'), namespace="org")),
-    path('courses/', include(('apps.courses.urls', 'courses'), namespace="courses")),
+    path('courses/', include(('apps.courses.urls', 'courses'), namespace="course")),
 ]
 
 urlpatterns += static('/media/', document_root=MEDIA_ROOT)

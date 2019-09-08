@@ -93,7 +93,7 @@
                             <li class="{% if request.path == '/' %}active{% endif %}"><a href="{% url 'index' %}">首页</a>
                             </li>
                             <li class="{% if request.path|slice:'8' == '/courses' %}active{% endif %}">
-                                <a href="{% url 'courses:list' %}">
+                                <a href="{% url 'course:list' %}">
                                     公开课
                                     <img class="hot" src="{% static 'images/nav_hot.png' %}" alt="">
                                 </a>

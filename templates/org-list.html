@@ -1,7 +1,6 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
-{% block title %}机构列表页面{% endblock %}
-
+{% block title %}机构列表页-慕学在线网{% endblock %}
 {% block custom_bread %}
     <section>
         <div class="wp">
@@ -43,10 +42,8 @@
                                 <a href="?ct={{ category }}"><span
                                         class="{% ifequal city_id  '' %}active2{% endifequal %}">全部</span></a>
                                 {% for city in all_citys %}
-                                    <a href="?city={{ city.id }}&ct={{ category }}">
-                                        <span class="{% ifequal city_id city.id|stringformat:'i' %}active2{% endifequal %}">
-                                            {{ city.name }}
-                                        </span></a>
+                                    <a href="?city={{ city.id }}&ct={{ category }}"><span
+                                            class="{% ifequal city_id city.id|stringformat:'i' %}active2{% endifequal %}">{{ city.name }}</span></a>
                                 {% endfor %}
                             </div>
                         </li>
@@ -68,31 +65,33 @@
                         {% for org in all_orgs.object_list %}
                             <dl class="des difdes">
                                 <dt>
-                                    <img width="200" height="120" class="scrollLoading"
-                                         data-url="{{ MEDIA_URL }}{{ org.image }}" alt=""/>
+                                    <a href="{% url 'org:home' org.id %}">
+                                        <img width="200" height="120" class="scrollLoading"
+                                             data-url="{{ MEDIA_URL }}{{ org.image }}"/>
+                                    </a>
                                 </dt>
                                 <dd>
                                     <div class="clearfix">
-                                        <h1>{{ org.name }}</h1>
-                                        <div class="pic fl">
-                                            {% if org.is_auth %}
-                                                <img src="{% static 'images/authentication.png' %}" alt=""/>
-                                            {% endif %}
-                                            {% if org.is_gold %}
-                                                <img src="{% static 'images/gold.png' %}" alt=""/>
-                                            {% endif %}
-                                        </div>
+                                        <a href="{% url 'org:home' org.id %}">
+                                            <h1>{{ org.name }}</h1>
+                                            <div class="pic fl">
+                                                {% if org.is_auth %}
+                                                    <img src="{% static 'images/authentication.png' %}"/>
+                                                {% endif %}
+                                                {% if org.is_gold %}
+                                                    <img src="{% static 'images/gold.png' %}"/>
+                                                {% endif %}
+                                            </div>
+                                        </a>
                                     </div>
                                     <ul class="cont">
-                                        <li class="first">
-                                            <p class="pic9">课程数：<span>{{ org.course_nums }}</span></p>
-                                            <p class="c7">学习人数：<span>{{ org.students }}</span></p>
-                                        </li>
+                                        <li class="first"><p class="pic9">课程数：<span>{{ org.course_nums }}</span></p>
+                                            <p class="c7">学习人数：<span>{{ org.students }}</span></p></li>
                                         <li class="c8" style="padding-left:18px;">{{ org.address }}</li>
                                         <li class="pic10" style="padding-left:18px;">经典课程：
                                             {% if org.courses %}
                                                 {% for course in org.courses %}
-                                                    <a href="">{{ course.name }}</a>
+
                                                 {% endfor %}
                                             {% else %}
                                                 无
@@ -132,22 +131,19 @@
                 <div class="head">我要学习</div>
                 <form class="rightform" id="jsStayForm">
                     <div>
-                        <img src="{% static 'images/rightform1.png' %}" alt=""/>
-                        <label for="companyName"></label><input type="text" name="name" id="companyName"
-                                                                placeholder="名字" maxlength="25"/>
+                        <img src="{% static 'images/rightform1.png' %}"/>
+                        <input type="text" name="name" id="companyName" placeholder="名字" maxlength="25"/>
                     </div>
                     <div>
-                        <img src="{% static 'images/rightform2.png' %}" alt=""/>
-                        <label for="companyMobile"></label><input type="text" name="mobile" id="companyMobile"
-                                                                  placeholder="联系电话"/>
+                        <img src="{% static 'images/rightform2.png' %}"/>
+                        <input type="text" name="mobile" id="companyMobile" placeholder="联系电话"/>
                     </div>
                     <div>
-                        <img src="{% static 'images/rightform3.png' %}" alt=""/>
-                        <label for="companyAddress"></label><input type="text" name="course_name" id="companyAddress"
-                                                                   placeholder="课程名" maxlength="50"/>
+                        <img src="{% static 'images/rightform3.png' %}"/>
+                        <input type="text" name="course_name" id="companyAddress" placeholder="课程名" maxlength="50"/>
                     </div>
                     <p class="error company-tips" id="jsCompanyTips"></p>
-                    <label for="jsStayBtn"></label><input class="btn" type="text" id="jsStayBtn" value="立即咨询 >"/>
+                    <input class="btn" type="text" id="jsStayBtn" value="立即咨询 >"/>
                     {% csrf_token %}
                 </form>
             </div>
@@ -158,6 +154,7 @@
                     <dl class="des">
                         <dt class="num fl">{{ forloop.counter }}</dt>
                         <dd>
+                            <a href="{% url 'org:home' org.id %}"><h1>{{ org.name }}</h1></a>
                             <p>{{ org.address }}</p>
                         </dd>
                     </dl>
@@ -170,30 +167,27 @@
 {% block custom_js %}
     <script>
         $(function () {
-            let jsStayBtn = $('#jsStayBtn');
-            let jsStayForm = $('#jsStayForm');
-            let jsCompanyTips = $('#jsCompanyTips');
-            jsStayBtn.on('click', function () {
-                $.ajax({
-                    cache: false,
-                    type: "POST",
-                    datatype: 'json',
-                    url: "{% url 'org:add_ask' %}",
-                    data: jsStayForm.serialize(),
-                    async: true,
-                    success(data) {
-                        if (data.status === 'success') {
-                            jsStayForm[0].reset();
-                            alert(data.msg);
-                        } else if (data.status === 'fail') {
-                            jsCompanyTips.html(data.msg);
-                        }
-                    },
-                    error(err) {
-                        console.log('error');
-                    }
+            $(document).ready(function () {
+                $('#jsStayBtn').on('click', function () {
+                    $.ajax({
+                        cache: false,
+                        type: "POST",
+                        url: "{% url 'org:add_ask' %}",
+                        data: $('#jsStayForm').serialize(),
+                        async: true,
+                        success: function (data) {
+                            if (data.status === 'success') {
+                                $('#jsStayForm')[0].reset();
+                                $('#jsCompanyTips').html("");
+                                alert("提交成功")
+                            } else if (data.status === 'fail') {
+                                $('#jsCompanyTips').html(data.msg)
+                            }
+                        },
+                    });
                 });
             });
         })
+
     </script>
 {% endblock %}

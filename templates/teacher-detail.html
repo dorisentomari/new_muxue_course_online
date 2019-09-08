@@ -59,14 +59,14 @@
                     <div class="left layout">
                         <div class="head">
                             <ul class="tab_header">
-                                <li class="active"><a href="">全部课程</a></li>
+                                <li class="active"><a href="{% url 'courses:list' %}">全部课程</a></li>
                             </ul>
                         </div>
                         <div class="companycenter">
                             <div class="group_list brief">
                                 {% for course in teacher.course_set.all %}
                                     <div class="module1_5 box">
-                                        <a href="">
+                                        <a href="{% url 'courses:detail' course.id %}">
                                             <img width="214" height="190" class="scrollLoading"
                                                  src="{{ course.image.url }}"/>
                                         </a>
@@ -135,12 +135,11 @@
 {% endblock %}
 {% block custom_js %}
     <script type="text/javascript">
-        //收藏分享
         function add_fav(current_elem, fav_id, fav_type) {
             $.ajax({
                 cache: false,
                 type: "POST",
-                url: "",
+                url: "{% url 'op:fav' %}",
                 data: {'fav_id': fav_id, 'fav_type': fav_type},
                 async: true,
                 beforeSend: function (xhr, settings) {

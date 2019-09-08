@@ -9,6 +9,7 @@ from organization.models import CourseOrg, CityDict, Teacher
 from organization.forms import AddAskModelForm
 from operation.models import UserFavorite
 
+from config.constant import PER_PAGE
 
 class OrgView(View):
     def get(self, request):
@@ -46,7 +47,7 @@ class OrgView(View):
         except PageNotAnInteger:
             page = 1
 
-        p = Paginator(all_orgs, per_page=1, request=request)
+        p = Paginator(all_orgs, per_page=PER_PAGE, request=request)
         orgs = p.page(page)
 
         return render(request, 'org-list.html', {
@@ -144,7 +145,7 @@ class OrgCourseView(View):
         except PageNotAnInteger:
             page = 1
 
-        p = Paginator(all_courses, per_page=1, request=request)
+        p = Paginator(all_courses, per_page=PER_PAGE, request=request)
         courses = p.page(page)
 
         return render(request, 'org-detail-course.html', {
@@ -197,7 +198,7 @@ class TeacherListView(View):
         except PageNotAnInteger:
             page = 1
 
-        p = Paginator(all_teachers, per_page=1, request=request)
+        p = Paginator(all_teachers, per_page=PER_PAGE, request=request)
         teachers = p.page(page)
 
         return render(request, "teachers-list.html", {

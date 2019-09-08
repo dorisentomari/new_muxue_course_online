@@ -23,6 +23,7 @@ class Course(BaseModel):
     click_nums = models.IntegerField(verbose_name=u'点击次数', default=0)
     need_know = models.CharField(verbose_name=u'课程须知', max_length=300, default='')
     tell_you = models.CharField(verbose_name=u'你能学到什么', max_length=300, default='')
+    is_classics = models.BooleanField(default=False, verbose_name="是否经典")
 
     class Meta:
         verbose_name = '课程'

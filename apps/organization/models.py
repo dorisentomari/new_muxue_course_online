@@ -32,6 +32,11 @@ class CourseOrg(BaseModel):
     students = models.IntegerField(verbose_name=u'学习人数', default=0)
     course_nums = models.IntegerField(verbose_name=u'课程数量', default=0)
 
+    def courses(self):
+        courses = self.course_set.filter(is_classics=True)[:3]
+        return courses
+
+
     class Meta:
         verbose_name = '课程机构'
         verbose_name_plural = verbose_name

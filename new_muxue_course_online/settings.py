@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'xadmin',
     'crispy_forms',
     'captcha',
+    'pure_pagination',
 ]
 
 AUTH_USER_MODEL = 'users.UserProfile'
@@ -149,3 +150,9 @@ EMAIL_HOST_PASSWORD = EMAIL_INFO['EMAIL_HOST_PASSWORD']
 EMAIL_USE_TLS = EMAIL_INFO['EMAIL_USE_TLS']
 
 EMAIL_FROM = EMAIL_INFO['EMAIL_FROM']
+
+PAGINATION_SETTINGS = {
+    'PAGE_RANGE_DISPLAYED': 4,
+    'MARGIN_PAGES_DISPLAYED': 1,
+    'SHOW_FIRST_PAGE_WHEN_INVALID': True,
+}

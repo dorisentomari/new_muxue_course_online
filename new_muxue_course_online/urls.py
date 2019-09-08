@@ -1,12 +1,16 @@
-from django.urls import path, include
+from django.urls import path
+from django.conf.urls import url, include
 from django.views.generic import TemplateView
 from django.conf.urls.static import static
+
 import xadmin
 
-from users.views import LoginView, LogoutView, RegisterView, ActiveUserView,\
+from users.views import LoginView, LogoutView, RegisterView, ActiveUserView, \
     ForgetPasswordView, ResetView, ModifyView
+from organization.views import OrgView
 
 from new_muxue_course_online.settings import MEDIA_ROOT
+
 urlpatterns = [
     path('', TemplateView.as_view(template_name='index.html'), name='index'),
     path('xadmin/', xadmin.site.urls),
@@ -18,6 +22,8 @@ urlpatterns = [
     path('forget_pwd/', ForgetPasswordView.as_view(), name='forget_pwd'),
     path('reset/<active_code>', ResetView.as_view(), name='reset_password'),
     path('modify_pwd/', ModifyView.as_view(), name='modify_password'),
+
+    path('org_list', OrgView.as_view(), name='org_list')
 ]
 
 urlpatterns += static('/media/', document_root=MEDIA_ROOT)

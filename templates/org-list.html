@@ -178,15 +178,15 @@
                     cache: false,
                     type: "POST",
                     datatype: 'json',
-                    url: "",
+                    url: "{% url 'org:add_ask' %}",
                     data: jsStayForm.serialize(),
                     async: true,
                     success(data) {
                         if (data.status === 'success') {
                             jsStayForm[0].reset();
-                            alert("提交成功");
+                            alert(data.msg);
                         } else if (data.status === 'fail') {
-                            jsCompanyTips.html(data.message);
+                            jsCompanyTips.html(data.msg);
                         }
                     },
                     error(err) {

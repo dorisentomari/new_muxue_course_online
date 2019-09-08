@@ -1,10 +1,12 @@
 from django.shortcuts import render
 from django.views.generic.base import View
 from django.db.models import Q
+from django.http import JsonResponse
 
 from pure_pagination import Paginator, PageNotAnInteger
 
-from organization.models import CourseOrg, CityDict, Teacher
+from organization.models import CourseOrg, CityDict
+from organization.forms import AddAskModelForm, AddAskForm
 
 
 class OrgView(View):
@@ -57,3 +59,19 @@ class OrgView(View):
             "keywords": keywords,
             "s_type": s_type,
         })
+
+
+class AddAskView(View):
+    def post(self, request):
+        user_ask_form = AddAskModelForm(request.POST)
+        if user_ask_form.is_valid():
+            user_ask_form.save(commit=True)
+            return JsonResponse({
+                'status': 'success',
+                'msg': '提交成功'
+            })
+        else:
+            return JsonResponse({
+                'status': 'fail',
+                'msg': '提交失败'
+            })

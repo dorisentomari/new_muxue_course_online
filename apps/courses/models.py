@@ -32,6 +32,21 @@ class Course(BaseModel):
     def __str__(self):
         return self.name
 
+    def lesson_nums(self):
+        return self.lesson_set.all().count()
+
+    def show_image(self):
+        from django.utils.safestring import mark_safe
+        return mark_safe("<img src='{}'>".format(self.image.url))
+
+    show_image.short_description = "图片"
+
+    def go_to(self):
+        from django.utils.safestring import mark_safe
+        return mark_safe("<a href='/course/{}'>跳转</a>".format(self.id))
+
+    go_to.short_description = "跳转"
+
 
 # 每一个章节
 class Lesson(BaseModel):
@@ -73,6 +88,18 @@ class CourseResource(BaseModel):
 
     def __str__(self):
         return self.name
+
+
+class CourseTag(BaseModel):
+    course = models.ForeignKey(Course, on_delete=models.CASCADE, verbose_name="课程")
+    tag = models.CharField(max_length=100, verbose_name="标签")
+
+    class Meta:
+        verbose_name = "课程标签"
+        verbose_name_plural = verbose_name
+
+    def __str__(self):
+        return self.tag
 
 
 # 轮播图

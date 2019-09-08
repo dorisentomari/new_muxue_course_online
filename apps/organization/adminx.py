@@ -15,9 +15,9 @@ class CityDictAdmin(object):
 
 
 class CourseOrgAdmin(object):
-    list_display = ['name', 'desc', 'click_nums', 'fav_num', 'address', 'city', 'is_disable', 'create_time',
+    list_display = ['name', 'desc', 'click_nums', 'fav_nums', 'address', 'city', 'is_disable', 'create_time',
                     'update_time']
-    search_fields = ['name', 'desc', 'click_nums', 'fav_num', 'address', 'city']
+    search_fields = ['name', 'desc', 'click_nums', 'fav_nums', 'address', 'city']
     list_filter = list_display
     readonly_fields = ['create_time', 'update_time']
     # 这个外键可以采用ajax方法获取字段
@@ -28,12 +28,12 @@ class CourseOrgAdmin(object):
 
 class TeacherAdmin(object):
     list_display = ['name', 'org', 'work_years', 'work_company',
-                    'work_position', 'points', 'click_nums', 'fav_num', 'is_disable', 'create_time', 'update_time']
+                    'work_position', 'points', 'click_nums', 'fav_nums', 'is_disable', 'create_time', 'update_time']
     search_fields = ['name', 'org', 'work_years', 'work_company',
-                     'work_position', 'points', 'click_nums', 'fav_num']
+                     'work_position', 'points', 'click_nums', 'fav_nums']
     list_filter = list_display
     readonly_fields = ['create_time', 'update_time']
-    list_editable = ['name', 'org', 'work_years', 'work_company', 'work_position', 'points', 'click_nums', 'fav_num',
+    list_editable = ['name', 'org', 'work_years', 'work_company', 'work_position', 'points', 'click_nums', 'fav_nums',
                      'is_disable']
     show_bookmarks = False
 

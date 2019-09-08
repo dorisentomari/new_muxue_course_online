@@ -23,7 +23,8 @@ class UserProfile(AbstractUser, BaseModel):
     gender = models.CharField(verbose_name=u'性别', max_length=6, choices=GENDER_CHOICES, default=u'')
     address = models.CharField(verbose_name=u'地址', max_length=100, null=True, default=u'')
     mobile = models.CharField(verbose_name=u'手机号', max_length=11, null=True, blank=True)
-    image = models.ImageField(verbose_name=u'头像', max_length=100, upload_to=get_image_path, default=u'image/default.jpg')
+    image = models.ImageField(verbose_name=u'头像', max_length=100, upload_to=get_image_path,
+                              default=u'image/default.jpg')
 
     class Meta:
         verbose_name = u'用户信息'
@@ -31,6 +32,10 @@ class UserProfile(AbstractUser, BaseModel):
 
     def __str__(self):
         return self.username
+
+    # def unread_nums(self):
+    #     # 未读消息数量
+    #     return self.usermessage_set.filter(has_read=False).count()
 
 
 class EmailVerifyRecord(BaseModel):

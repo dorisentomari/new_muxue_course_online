@@ -150,6 +150,8 @@
                                 </dd>
                             </dl>
                         {% endfor %}
+
+
                     </div>
                 </div>
             </div>
@@ -158,7 +160,9 @@
 {% endblock %}
 
 {% block custom_js %}
+
     <script type="text/javascript">
+        //收藏分享
         function add_fav(current_elem, fav_id, fav_type) {
             $.ajax({
                 cache: false,
@@ -170,13 +174,13 @@
                     xhr.setRequestHeader("X-CSRFToken", "{{ csrf_token }}");
                 },
                 success: function (data) {
-                    if (data.status === 'fail') {
-                        if (data.msg === '用户未登录') {
+                    if (data.status == 'fail') {
+                        if (data.msg == '用户未登录') {
                             window.location.href = "{% url 'login' %}";
                         } else {
                             alert(data.msg)
                         }
-                    } else if (data.status === 'success') {
+                    } else if (data.status == 'success') {
                         current_elem.text(data.msg)
                     }
                 },

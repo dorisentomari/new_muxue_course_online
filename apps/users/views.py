@@ -27,7 +27,10 @@ class LoginView(View):
     def get(self, request):
         if request.user.is_authenticated:
             return HttpResponseRedirect(reverse("index"))
-        return render(request, 'login.html', {})
+        next = request.GET.get("next", "")
+        return render(request, 'login.html', {
+            'next': next
+        })
 
     def post(self, request):
         login_form = LoginForm(request.POST)
@@ -41,6 +44,11 @@ class LoginView(View):
             user = authenticate(username=username, password=password)
             if user is not None:
                 login(request, user)
+                next = request.GET.get("next", "")
+                print('next')
+                print(next)
+                if next:
+                    return HttpResponseRedirect(next)
                 return HttpResponseRedirect(reverse('index'))
             else:
                 return render(request, 'login.html', {

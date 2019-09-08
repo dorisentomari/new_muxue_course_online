@@ -55,7 +55,6 @@
             </div>
         </div>
         <div class="course-info-main clearfix w has-progress">
-
             <div class="info-bar clearfix">
                 <div class="content-wrap clearfix">
                     <div class="content">
@@ -114,12 +113,18 @@
                             <div class="box mb40">
                                 <h4>讲师提示</h4>
                                 <div class="teacher-info">
-                                    <a href="{% url 'org:teacher_detail' course.teacher.id %}" target="_blank">
+                                    {% comment %}
+                                        {% url 'org:teacher_detail' course.teacher.id %}
+                                    {% endcomment %}
+                                    <a href="" target="_blank">
                                         <img src='{{ course.teacher.image.url }}' width='80' height='80'/>
                                     </a>
                                     <span class="tit">
-          <a href="{% url 'org:teacher_detail' course.teacher.id %}" target="_blank">{{ course.teacher.name }}</a>
-        </span>
+                                        {% comment %}
+                                            {% url 'org:teacher_detail' course.teacher.id %}
+                                        {% endcomment %}
+                                        <a href="" target="_blank">{{ course.teacher.name }}</a>
+                                    </span>
                                     <span class="job">{{ course.teacher.work_position }}</span>
                                 </div>
                                 <div class="course-info-tip">
@@ -154,7 +159,6 @@
                                     </div>
                                 </div>
                             </div>
-
                         </div>
                     </div>
                 </div>

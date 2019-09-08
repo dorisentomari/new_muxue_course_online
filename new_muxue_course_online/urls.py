@@ -1,5 +1,5 @@
 from django.urls import path
-from django.conf.urls import url, include
+from django.conf.urls import include
 from django.views.generic import TemplateView
 from django.conf.urls.static import static
 
@@ -7,7 +7,6 @@ import xadmin
 
 from users.views import LoginView, LogoutView, RegisterView, ActiveUserView, \
     ForgetPasswordView, ResetView, ModifyView
-from organization.views import OrgView
 
 from new_muxue_course_online.settings import MEDIA_ROOT
 
@@ -23,7 +22,8 @@ urlpatterns = [
     path('reset/<active_code>', ResetView.as_view(), name='reset_password'),
     path('modify_pwd/', ModifyView.as_view(), name='modify_password'),
 
-    path('org_list', OrgView.as_view(), name='org_list')
+    path('org/', include(('apps.organization.urls', 'organization'), namespace="org")),
+    # path('courses/', include(('apps.courses.urls', 'courses'), namespace="courses")),
 ]
 
 urlpatterns += static('/media/', document_root=MEDIA_ROOT)

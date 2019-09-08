@@ -1,124 +1,59 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'base.html' %}
 {% load staticfiles %}
-<head>
-    <meta charset="UTF-8">
-    <meta name="renderer" content="webkit">
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
-    <title>课程机构列表 - 慕学在线网</title>
-    <link rel="stylesheet" type="text/css" href="{% static 'css/reset.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/animate.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
-    <script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/jquery-migrate-1.2.1.min.js' %}"></script>
-
-</head>
-<body>
-<section class="headerwrap ">
-    <header>
-        <div class=" header">
-            <div class="top">
-                <div class="wp">
-                    <div class="fl"><p>服务电话：<b>020-88889999</b></p></div>
-                    {% if request.user.is_authenticated %}
-                        <div class="personal">
-                            <dl class="user fr">
-                                <dd>bobby<img class="down fr" src="{% static 'images/top_down.png' %}" alt=""/></dd>
-                            </dl>
-                            <div class="userdetail">
-                                <dl>
-                                    <dt>IMAGE</dt>
-                                    <dd>
-                                        <h2>django</h2>
-                                        <p>bobby</p>
-                                    </dd>
-                                </dl>
-                                <div class="btn">
-                                    {% comment %}
-                                       {% url 'usercenter-info %}
-                                    {% endcomment %}
-                                    <a class="personcenter fl" href="">进入个人中心</a>
-                                    <a class="fr" href="{% url 'logout' %}">退出</a>
-                                </div>
-                            </div>
-                        </div>
-                    {% else %}
-                        <a style="color:white" class="fr registerbtn" href="{% url 'register' %}">注册</a>
-                        <a style="color:white" class="fr loginbtn" href="{% url 'login' %}">登录</a>
-                    {% endif %}
-
-                </div>
-            </div>
-            <nav>
-                <div class="nav">
-                    <div class="wp">
-                        <ul>
-                            <li class="active"><a href="{% url 'index' %}">首页</a></li>
+{% block title %}首页-慕学在线网{% endblock %}
+{% block custom_content %}
+    <div class="banner">
+        <div class="wp">
+            <div class="fl">
+                <div class="imgslide">
+                    <ul class="imgs">
+                        {% for banner in banners %}
                             <li>
-                                {% comment %}
-                                    {% url 'course-list' %}
-                                {% endcomment %}
-                                <a href="">
-                                    公开课
+                                <a href="{{ banner.url }}">
+                                    <img width="1200" height="478" src="{{ banner.image.url }}"/>
                                 </a>
                             </li>
-                            <li>
-                                {% comment %}
-                                    {% url 'teachers-list' %}
-                                {% endcomment %}
-                                <a href="">授课教师</a>
-                            </li>
-                            {% comment %}
-                                {% url 'org-list' %}
-                            {% endcomment %}
-                            <li><a href="">授课机构</a></li>
-                        </ul>
-                    </div>
+                        {% endfor %}
+                    </ul>
                 </div>
-            </nav>
+                <div class="unslider-arrow prev"></div>
+                <div class="unslider-arrow next"></div>
+            </div>
 
-        </div>
-    </header>
-</section>
-
-<footer>
-    <div class="footer">
-        <div class="wp">
-            <ul class="cont">
-                <li class="logo"><a href=""></a></li>
-                <li class="code">
-                    <p class="center">扫描关注微信</p></li>
-                <li class="third">
-                    <p class="tell">33333333</p>
-                    <p class="time">周一至周日 9:00-18:00</p></li>
-            </ul>
-
-        </div>
-        <p class="line"></p>
-        <div class="wp clear">
-            <span class="fl">? 2016 www.projectsedu.com 慕学在线-在线学习交流平台 保留所有权利</span>
-            <span class="fr">copyright ? 2016 ICP备案证书号：蜀ICP备xxxxx号-1</span>
         </div>
     </div>
-</footer>
+    <section>
+        <div class="wp">
+            <ul class="feature">
+                <li class="feature1">
+                    <img class="pic" src="/static/images/feature1.png"/>
+                    <p class="center">专业权威</p>
+                </li>
+                <li class="feature2">
+                    <img class="pic" src="/static/images/feature2.png"/>
+                    <p class="center">课程最新</p>
+                </li>
+                <li class="feature3">
+                    <img class="pic" src="/static/images/feature3.png"/>
+                    <p class="center">名师授课</p>
+                </li>
+                <li class="feature4">
+                    <img class="pic" src="/static/images/feature4.png"/>
+                    <p class="center">数据真实</p>
+                </li>
+            </ul>
+        </div>
+    </section>
+{% endblock %}
+{% block custom_js %}
+    <script src="{% static 'js/selectUi.js' %}" type='text/javascript'></script>
+    <script src="{% static 'js/deco-common.js' %}" type='text/javascript'></script>
+    <script type="text/javascript" src="{% static 'js/plugins/laydate/laydate.js' %}"></script>
+    <script src="{% static  'js/plugins/layer/layer.js' %}"></script>
+    <script src="{% static 'js/plugins/queryCity/js/public.js' %}" type="text/javascript"></script>
+    <script src="{% static 'js/unslider.js' %}" type="text/javascript"></script>
+    <script src="{% static 'js/plugins/jquery.scrollLoading.js' %}" type="text/javascript"></script>
+    <script src="{% static 'js/deco-common.js' %}" type="text/javascript"></script>
 
-<section>
-    <ul class="sidebar">
-        <li class="qq">
-            <a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=2023525077&site=qq&menu=yes"></a>
-        </li>
-        <li class="totop"></li>
-    </ul>
-</section>
-<script src="{% static 'js/selectUi.js' %}" type='text/javascript'></script>
-<script src="{% static 'js/deco-common.js' %}" type='text/javascript'></script>
-<script src="{% static 'js/plugins/laydate/laydate.js' %}" type='text/javascript'></script>
-<script src="{% static 'js/plugins/layer/layer.js' %}" type='text/javascript'></script>
-<script src="{% static 'js/plugins/layer/layer.js' %}" type='text/javascript'></script>
-<script src="{% static 'js/plugins/queryCity/js/public.js' %}" type='text/javascript'></script>
-<script src="{% static 'js/unslider.js' %}" type='text/javascript'></script>
-<script src="{% static 'js/plugins/jquery.scrollLoading.js' %}" type='text/javascript'></script>
-<script src="{% static 'js/index.js' %}" type='text/javascript'></script>
-
-</body>
-</html>
+    <script type="text/javascript" src="{% static 'js/index.js' %}"></script>
+{% endblock %}

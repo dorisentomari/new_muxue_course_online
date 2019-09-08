@@ -92,9 +92,6 @@
                                         <li class="pic10" style="padding-left:18px;">经典课程：
                                             {% if org.courses %}
                                                 {% for course in org.courses %}
-                                                    {% comment %}
-                                                    {% url 'course:detail' course.id %}
-                                                    {% endcomment %}
                                                     <a href="">{{ course.name }}</a>
                                                 {% endfor %}
                                             {% else %}

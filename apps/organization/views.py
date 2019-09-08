@@ -10,6 +10,7 @@ from organization.models import CourseOrg, CityDict, Teacher
 class OrgView(View):
     def get(self, request):
         all_orgs = CourseOrg.objects.all()
+
         all_citys = CityDict.objects.all()
         hot_orgs = all_orgs.order_by('-click_num')[:3]
         keywords = request.GET.get('keywords', '')

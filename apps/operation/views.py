@@ -11,15 +11,17 @@ from operation.models import Banner
 
 class IndexView(View):
     def get(self, request):
+        s_type = 'course'
         banners = Banner.objects.all().order_by('index')
-        courses = Course.objects.filter(is_banner=False)[:6]
-        banner_courses = Course.objects.filter(is_banner=True)
+        courses = Course.objects.filter()[:6]
+        banner_courses = Course.objects.filter()
         course_orgs = CourseOrg.objects.all()[:15]
         return render(request, 'index.html', {
             'banners': banners,
             'courses': courses,
             'banner_courses': banner_courses,
-            'course_orgs': course_orgs
+            'course_orgs': course_orgs,
+            's_type': s_type,
         })
 
 
@@ -48,7 +50,7 @@ class CommentView(View):
         else:
             return JsonResponse({
                 'status': 'fail',
-                'msg': '参数错误'
+                'msg': '参数错误',
             })
 
 
@@ -57,7 +59,7 @@ class AddFavView(View):
         if not request.user.is_authenticated:
             return JsonResponse({
                 'status': 'fail',
-                'msg': '用户未登录'
+                'msg': '用户未登录',
             })
 
         user_fav_form = UserFavForm(request.POST)
@@ -84,7 +86,7 @@ class AddFavView(View):
 
                 return JsonResponse({
                     'status': 'success',
-                    'msg': '收藏'
+                    'msg': '收藏',
                 })
             else:
                 user_fav = UserFavorite()
@@ -95,10 +97,10 @@ class AddFavView(View):
 
                 return JsonResponse({
                     'status': 'success',
-                    'msg': '已收藏'
+                    'msg': '已收藏',
                 })
         else:
             return JsonResponse({
                 'status': 'fail',
-                'msg': '参数错误'
+                'msg': '参数错误',
             })

@@ -1,6 +1,9 @@
 {% extends 'base.html' %}
+
 {% load staticfiles %}
+
 {% block title %}首页-慕学在线网{% endblock %}
+
 {% block custom_content %}
     <div class="banner">
         <div class="wp">
@@ -19,7 +22,6 @@
                 <div class="unslider-arrow prev"></div>
                 <div class="unslider-arrow next"></div>
             </div>
-
         </div>
     </div>
     <section>
@@ -45,15 +47,15 @@
         </div>
     </section>
 {% endblock %}
+
 {% block custom_js %}
     <script src="{% static 'js/selectUi.js' %}" type='text/javascript'></script>
     <script src="{% static 'js/deco-common.js' %}" type='text/javascript'></script>
-    <script type="text/javascript" src="{% static 'js/plugins/laydate/laydate.js' %}"></script>
+    <script src="{% static 'js/plugins/laydate/laydate.js' %}" type="text/javascript"></script>
     <script src="{% static  'js/plugins/layer/layer.js' %}"></script>
     <script src="{% static 'js/plugins/queryCity/js/public.js' %}" type="text/javascript"></script>
     <script src="{% static 'js/unslider.js' %}" type="text/javascript"></script>
     <script src="{% static 'js/plugins/jquery.scrollLoading.js' %}" type="text/javascript"></script>
     <script src="{% static 'js/deco-common.js' %}" type="text/javascript"></script>
-
-    <script type="text/javascript" src="{% static 'js/index.js' %}"></script>
+    <script src="{% static 'js/index.js' %}" type="text/javascript"></script>
 {% endblock %}

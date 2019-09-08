@@ -11,6 +11,7 @@ from operation.models import UserFavorite
 
 from config.constant import PER_PAGE
 
+
 class OrgView(View):
     def get(self, request):
         all_orgs = CourseOrg.objects.all()
@@ -70,12 +71,12 @@ class AddAskView(View):
             user_ask_form.save(commit=True)
             return JsonResponse({
                 'status': 'success',
-                'msg': '提交成功'
+                'msg': '提交成功',
             })
         else:
             return JsonResponse({
                 'status': 'fail',
-                'msg': '提交失败'
+                'msg': '提交失败',
             })
 
 
@@ -99,7 +100,7 @@ class OrgHomeView(View):
             'all_teacher': all_teacher,
             'course_org': course_org,
             'current_page': current_page,
-            'has_fav': has_fav
+            'has_fav': has_fav,
         })
 
 
@@ -122,7 +123,7 @@ class OrgTeacherView(View):
             'all_teacher': all_teacher,
             'course_org': course_org,
             'current_page': current_page,
-            'has_fav': has_fav
+            'has_fav': has_fav,
         })
 
 
@@ -152,7 +153,7 @@ class OrgCourseView(View):
             'all_courses': courses,
             'course_org': course_org,
             'current_page': current_page,
-            'has_fav': has_fav
+            'has_fav': has_fav,
         })
 
 
@@ -171,7 +172,7 @@ class OrgDescView(View):
         return render(request, 'org-detail-desc.html', {
             'course_org': course_org,
             'current_page': current_page,
-            'has_fav': has_fav
+            'has_fav': has_fav,
         })
 
 
@@ -207,7 +208,7 @@ class TeacherListView(View):
             "sort": sort,
             "hot_teachers": hot_teachers,
             "keywords": keywords,
-            "s_type": s_type
+            "s_type": s_type,
         })
 
 
@@ -228,5 +229,5 @@ class TeacherDetailView(View):
             "teacher": teacher,
             "teacher_fav": teacher_fav,
             "org_fav": org_fav,
-            "hot_teachers": hot_teachers
+            "hot_teachers": hot_teachers,
         })

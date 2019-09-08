@@ -41,7 +41,7 @@ class CourseListView(View):
             'sort': sort,
             'hot_courses': hot_courses,
             'keywords': keywords,
-            's_type': s_type
+            's_type': s_type,
         })
 
 
@@ -77,7 +77,7 @@ class CourseDetailView(View):
             'course': course,
             'has_fav_course': has_fav_course,
             'has_fav_org': has_fav_org,
-            'related_courses': related_courses
+            'related_courses': related_courses,
         })
 
 
@@ -115,7 +115,7 @@ class CourseLessonView(LoginRequiredMixin, View):
         return render(request, 'course-video.html', {
             'course': course,
             'course_resources': course_resources,
-            'related_courses': related_courses
+            'related_courses': related_courses,
         })
 
 
@@ -192,5 +192,5 @@ class CourseCommentsView(LoginRequiredMixin, View):
             'course': course,
             'course_resources': course_resources,
             'related_courses': related_courses,
-            'comments': comments
+            'comments': comments,
         })

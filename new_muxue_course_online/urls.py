@@ -7,11 +7,12 @@ import xadmin
 
 from users.views import LoginView, LogoutView, RegisterView, ActiveUserView, \
     ForgetPasswordView, ResetView, ModifyView
+from operation.views import IndexView
 
 from new_muxue_course_online.settings import MEDIA_ROOT
 
 urlpatterns = [
-    path('', TemplateView.as_view(template_name='index.html'), name='index'),
+    path('', IndexView.as_view(), name='index'),
     path('xadmin/', xadmin.site.urls),
     path('captcha/', include('captcha.urls')),
     path('login/', LoginView.as_view(), name='login'),

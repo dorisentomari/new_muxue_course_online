@@ -29,14 +29,14 @@ class LoginView(View):
             return HttpResponseRedirect(reverse("index"))
         next = request.GET.get("next", "")
         return render(request, 'login.html', {
-            'next': next
+            'next': next,
         })
 
     def post(self, request):
         login_form = LoginForm(request.POST)
         if login_form.is_valid() is not True:
             return render(request, 'login.html', {
-                'login_form': login_form
+                'login_form': login_form,
             })
         else:
             username = request.POST.get('username', '')
@@ -53,7 +53,7 @@ class LoginView(View):
             else:
                 return render(request, 'login.html', {
                     'login_form': login_form,
-                    'msg': '用户名或密码错误'
+                    'msg': '用户名或密码错误',
                 })
 
 
@@ -75,14 +75,14 @@ class RegisterView(View):
         register_form = RegisterForm(request.POST)
         if register_form.is_valid() is not True:
             return render(request, 'register.html', {
-                'register_form': register_form
+                'register_form': register_form,
             })
         else:
             username = request.POST.get('email', '')
             if UserProfile.objects.filter(email=username):
                 return render(request, 'register.html', {
                     'msg': '用户已存在',
-                    'register_form': register_form
+                    'register_form': register_form,
                 })
             password = request.POST.get('password', '')
             user_profile = UserProfile()
@@ -114,7 +114,7 @@ class ForgetPasswordView(View):
     def get(self, request):
         forget_form = ForgetPasswordForm()
         return render(request, 'forgetpwd.html', {
-            'forget_form': forget_form
+            'forget_form': forget_form,
         })
 
     def post(self, request):
@@ -138,7 +138,7 @@ class ResetView(View):
                 return render(request, 'password_reset.html', {
                     'active_code': active_code,
                     'msg': '验证码已失效',
-                    'is_expire': True
+                    'is_expire': True,
                 })
             else:
                 email = record.email
@@ -160,7 +160,7 @@ class ModifyView(View):
         if modify_form.is_valid() is not True:
             return render(request, 'password_reset.html', {
                 'email': email,
-                'modify_form': modify_form
+                'modify_form': modify_form,
             })
 
         password1 = request.POST.get('password1', '')
@@ -169,7 +169,7 @@ class ModifyView(View):
         if password1 != password2:
             return render(request, 'password_reset.html', {
                 'email': email,
-                'msg': '两次输入的密码不一致'
+                'msg': '两次输入的密码不一致',
             })
 
         user = UserProfile.objects.filter(email=email).first()

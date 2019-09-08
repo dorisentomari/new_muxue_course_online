@@ -66,8 +66,7 @@
                     <a href="index.html"><img class="fl" src="{% static 'images/logo.jpg' %}" alt=""/></a>
                     <div class="searchbox fr">
                         <div class="selectContainer fl">
-                            <span class="selectOption" id="jsSelectOption"
-                                  data-value="{% if s_type %}{{ s_type }}{% else %}course{% endif %}">
+                            <span class="selectOption" id="jsSelectOption" data-value="{% if s_type %}{{ s_type }}{% else %}course{% endif %}">
                                 {% if s_type == 'course' %}公开课{% endif %}
                                 {% if s_type == 'org' %}课程机构{% endif %}
                                 {% if s_type == 'teacher' %}授课老师{% endif %}

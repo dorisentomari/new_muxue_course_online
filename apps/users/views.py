@@ -2,14 +2,30 @@ from django.shortcuts import render
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.backends import ModelBackend
 from django.contrib.auth.hashers import make_password
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseRedirect, JsonResponse
 from django.db.models import Q
 from django.views.generic import View
 from django.urls import reverse
 
-from .models import UserProfile, EmailVerifyRecord
+from pure_pagination import Paginator, PageNotAnInteger
+
 from .forms import LoginForm, RegisterForm, ForgetPasswordForm, ModifyPasswordForm
+from users.forms import UserInfoForm, ChangePwdForm, UploadImageForm
+from users.forms import RegisterGetForm, UpdateMobileForm
 from apps.utils.email_send import send_register_email
+
+from operation.models import UserFavorite, UserMessage
+from organization.models import CourseOrg, Teacher
+from courses.models import Course
+from .models import UserProfile, EmailVerifyRecord
+
+
+def message_nums(request):
+    if request.user.is_authenticated:
+        return {'unread_nums': request.user.usermessage_set.filter(has_read=False).count()}
+    else:
+        return {}
 
 
 class CustomBackend(ModelBackend):
@@ -26,8 +42,8 @@ class CustomBackend(ModelBackend):
 class LoginView(View):
     def get(self, request):
         if request.user.is_authenticated:
-            return HttpResponseRedirect(reverse("index"))
-        next = request.GET.get("next", "")
+            return HttpResponseRedirect(reverse('index'))
+        next = request.GET.get('next', '')
         return render(request, 'login.html', {
             'next': next,
         })
@@ -44,7 +60,7 @@ class LoginView(View):
             user = authenticate(username=username, password=password)
             if user is not None:
                 login(request, user)
-                next = request.GET.get("next", "")
+                next = request.GET.get('next', '')
                 print('next')
                 print(next)
                 if next:
@@ -61,7 +77,7 @@ class LoginView(View):
 class LogoutView(View):
     def get(self, request):
         logout(request)
-        return HttpResponseRedirect(reverse("index"))
+        return HttpResponseRedirect(reverse('index'))
 
 
 class RegisterView(View):
@@ -131,7 +147,6 @@ class ForgetPasswordView(View):
 class ResetView(View):
     def get(self, request, active_code):
         record = EmailVerifyRecord.objects.filter(code=active_code).first()
-        print(record)
         if record:
             if record.is_delete is True:
                 print('msg', '验证码已失效')
@@ -181,3 +196,168 @@ class ModifyView(View):
             record.is_delete = True
             record.save()
         return render(request, 'login.html')
+
+
+class MyMessageView(LoginRequiredMixin, View):
+    login_url = '/login/'
+
+    def get(self, request):
+        messages = UserMessage.objects.filter()
+        current_page = 'message'
+        for message in messages:
+            message.has_read = True
+            message.save()
+
+        # 对讲师数据进行分页
+        try:
+            page = request.GET.get('page', 1)
+        except PageNotAnInteger:
+            page = 1
+
+        p = Paginator(messages, per_page=1, request=request)
+        messages = p.page(page)
+
+        return render(request, 'usercenter-message.html', {
+            'messages': messages,
+            'current_page': current_page
+        })
+
+
+class MyFavCourseView(LoginRequiredMixin, View):
+    login_url = '/login/'
+
+    def get(self, request):
+        current_page = 'myfav_course'
+        course_list = []
+        fav_courses = UserFavorite.objects.filter(user=request.user, fav_type=1)
+        for fav_course in fav_courses:
+            try:
+                course = Course.objects.get(id=fav_course.fav_id)
+                course_list.append(course)
+            except Course.DoesNotExist as e:
+                pass
+        return render(request, 'usercenter-fav-course.html', {
+            'course_list': course_list,
+            'current_page': current_page
+        })
+
+
+class MyFavTeacherView(LoginRequiredMixin, View):
+    login_url = '/login/'
+
+    def get(self, request):
+        current_page = 'myfav_teacher'
+        teacher_list = []
+        fav_teachers = UserFavorite.objects.filter(user=request.user, fav_type=3)
+        for fav_teacher in fav_teachers:
+            org = Teacher.objects.get(id=fav_teacher.fav_id)
+            teacher_list.append(org)
+        return render(request, 'usercenter-fav-teacher.html', {
+            'teacher_list': teacher_list,
+            'current_page': current_page
+        })
+
+
+class MyFavOrgView(LoginRequiredMixin, View):
+    login_url = '/login/'
+
+    def get(self, request):
+        current_page = 'myfavorg'
+        org_list = []
+        fav_orgs = UserFavorite.objects.filter(user=request.user, fav_type=2)
+        for fav_org in fav_orgs:
+            org = CourseOrg.objects.get(id=fav_org.fav_id)
+            org_list.append(org)
+        return render(request, 'usercenter-fav-org.html', {
+            'org_list': org_list,
+            'current_page': current_page
+        })
+
+
+class MyCourseView(LoginRequiredMixin, View):
+    login_url = '/login/'
+
+    def get(self, request):
+        current_page = 'mycourse'
+        return render(request, 'usercenter-mycourse.html', {
+            'current_page': current_page
+        })
+
+
+class ChangeMobileView(LoginRequiredMixin, View):
+    login_url = '/login/'
+
+    def post(self, request):
+        mobile_form = UpdateMobileForm(request.POST)
+        if mobile_form.is_valid():
+            mobile = mobile_form.cleaned_data['mobile']
+            if UserProfile.objects.filter(mobile=mobile):
+                return JsonResponse({
+                    'mobile': '该手机号码已经被占用'
+                })
+            user = request.user
+            user.mobile = mobile
+            user.username = mobile
+            user.save()
+            return JsonResponse({
+                'status': 'success'
+            })
+        else:
+            return JsonResponse(mobile_form.errors)
+            # logout(request)
+
+
+class ChangePwdView(LoginRequiredMixin, View):
+    login_url = '/login/'
+
+    def post(self, request):
+        pwd_form = ChangePwdForm(request.POST)
+        if pwd_form.is_valid():
+            pwd1 = request.POST.get('password1', '')
+            user = request.user
+            user.set_password(pwd1)
+            user.save()
+
+            return JsonResponse({
+                'status': 'success'
+            })
+        else:
+            return JsonResponse(pwd_form.errors)
+
+
+class UploadImageView(LoginRequiredMixin, View):
+    login_url = '/login/'
+
+    def post(self, request):
+        image_form = UploadImageForm(request.POST, request.FILES, instance=request.user)
+        if image_form.is_valid():
+            image_form.save()
+            return JsonResponse({
+                'status': 'success'
+            })
+        else:
+            return JsonResponse({
+                'status': 'fail'
+            })
+
+
+class UserInfoView(LoginRequiredMixin, View):
+    login_url = '/login/'
+
+    def get(self, request):
+        current_page = 'info'
+        captcha_form = RegisterGetForm()
+        return render(request, 'usercenter-info.html', {
+            'captcha_form': captcha_form,
+            'current_page': current_page
+        })
+
+    def post(self, request):
+        user_info_form = UserInfoForm(request.POST, instance=request.user)
+        if user_info_form.is_valid():
+            user_info_form.save()
+            return JsonResponse({
+                'status': 'success'
+            })
+        else:
+            return JsonResponse(user_info_form.errors)

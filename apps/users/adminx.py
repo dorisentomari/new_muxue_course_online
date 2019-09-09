@@ -14,7 +14,7 @@ class UserProfileAdmin(UserAdmin):
             self.form_layout = (
                 Main(
                     Fieldset('', 'username', 'password', css_class='unsort no_title'),
-                    Fieldset(_('Personal info'), Row('nickname', 'birthday', 'mobile', 'gender', 'address'), 'email'),
+                    Fieldset(_('Personal info'), Row('nick_name', 'birthday', 'mobile', 'gender', 'address'), 'email'),
                     Fieldset(_('Permissions'), 'groups', 'user_permissions'),
                     Fieldset(_('Important dates'), 'last_login', 'date_joined'),
                 ),

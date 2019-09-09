@@ -26,6 +26,7 @@ urlpatterns = [
     path('org/', include(('apps.organization.urls', 'organization'), namespace="org")),
     path('courses/', include(('apps.courses.urls', 'courses'), namespace="course")),
     path('op/', include(('apps.operation.urls', 'operation'), namespace="op")),
+    path(r'users/', include(('apps.users.urls', "users"), namespace="users")),
 ]
 
 urlpatterns += static('/media/', document_root=MEDIA_ROOT)

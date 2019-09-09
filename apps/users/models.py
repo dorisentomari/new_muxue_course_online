@@ -18,7 +18,7 @@ def get_image_path(instance, filename):
 
 
 class UserProfile(AbstractUser, BaseModel):
-    nickname = models.CharField(verbose_name=u'昵称', max_length=50, default=u'')
+    nick_name = models.CharField(verbose_name=u'昵称', max_length=50, default=u'')
     birthday = models.DateField(verbose_name=u'生日', null=True, blank=True)
     gender = models.CharField(verbose_name=u'性别', max_length=6, choices=GENDER_CHOICES, default=u'')
     address = models.CharField(verbose_name=u'地址', max_length=100, null=True, default=u'')
@@ -33,9 +33,9 @@ class UserProfile(AbstractUser, BaseModel):
     def __str__(self):
         return self.username
 
-    # def unread_nums(self):
-    #     # 未读消息数量
-    #     return self.usermessage_set.filter(has_read=False).count()
+    def unread_nums(self):
+        # 未读消息数量
+        return self.usermessage_set.filter(has_read=False).count()
 
 
 class EmailVerifyRecord(BaseModel):

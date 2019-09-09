@@ -13,9 +13,9 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 import os, sys
 
 try:
-    from config_env import MYSQL_INFO, EMAIL_INFO
+    from config_env import MYSQL_INFO, EMAIL_INFO, REDIS_INFO
 except:
-    from config_env_default import MYSQL_INFO, EMAIL_INFO
+    from config_env_default import MYSQL_INFO, EMAIL_INFO, REDIS_INFO
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -36,7 +36,6 @@ ALLOWED_HOSTS = []
 AUTHENTICATION_BACKENDS = (
     'users.views.CustomBackend',
 )
-# Application definition
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -84,6 +83,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                # 'apps.users.views.message_nums',
             ],
         },
     },
@@ -150,3 +150,7 @@ EMAIL_HOST_PASSWORD = EMAIL_INFO['EMAIL_HOST_PASSWORD']
 EMAIL_USE_TLS = EMAIL_INFO['EMAIL_USE_TLS']
 
 EMAIL_FROM = EMAIL_INFO['EMAIL_FROM']
+
+REDIS_HOST = REDIS_INFO['REDIS_HOST']
+
+REDIS_PORT = REDIS_INFO['REDIS_PORT']

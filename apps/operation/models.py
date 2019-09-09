@@ -62,7 +62,7 @@ class UserMessage(BaseModel):
         verbose_name_plural = verbose_name
 
     def __str__(self):
-        return '已阅读'
+        return self.message
 
 
 # 用户课程
@@ -75,7 +75,7 @@ class UserCourse(BaseModel):
         verbose_name_plural = verbose_name
 
     def __str__(self):
-        return '课程已添加'
+        return self.course.name
 
 
 class Banner(BaseModel):

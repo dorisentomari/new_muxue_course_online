@@ -29,9 +29,9 @@ sys.path.insert(0, os.path.join(BASE_DIR, 'extra_apps'))
 SECRET_KEY = '3#h11!izq%w9#0c-wgu0z&*(ia=l+t_(*abs0)7=jf^&a&@j4('
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 AUTHENTICATION_BACKENDS = (
     'users.views.CustomBackend',

@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 
 import xadmin
-
+from xadmin.layout import Fieldset, Main, Row, Side
 from .models import Course, Lesson, Video, CourseResource
 
 
@@ -47,6 +47,50 @@ class CourseAdmin(object):
     model_icon = 'fa fa-circle-o'
 
 
+class NewCourseAdmin(object):
+    list_display = ['name', 'desc', 'detail', 'degree', 'learn_times',
+                    'student', 'fav_nums', 'click_nums', 'is_disable', 'create_time', 'update_time']
+    # 搜索的字段
+    search_fields = ['name', 'desc', 'detail', 'degree', 'learn_times',
+                     'student', 'fav_nums', 'click_nums', 'is_disable']
+    # 过滤的字段
+    list_filter = list_display
+
+    def queryset(self):
+        qs = super().queryset()
+        if not self.request.user.is_superuser:
+            qs = qs.filter(teacher=self.request.user.teacher)
+        return qs
+
+    def get_form_layout(self):
+        if self.org_obj:
+            self.form_layout = (
+                    Main(
+                        Fieldset("讲师信息",
+                                 'teacher','course_org',
+                                 css_class='unsort no_title'
+                                 ),
+                        Fieldset("基本信息",
+                                 'name', 'desc',
+                                 Row('learn_times', 'degree'),
+                                 Row('category', 'tag'),
+                                 'youneed_know', 'teacher_tell', 'detail',
+                                 ),
+                    ),
+                    Side(
+                        Fieldset("访问信息",
+                                 'fav_nums', 'click_nums', 'student','add_time'
+                                 ),
+                    ),
+                    Side(
+                        Fieldset("选择信息",
+                                 'is_banner', 'is_classics'
+                                 ),
+                    )
+            )
+        return super(NewCourseAdmin, self).get_form_layout()
+
+
 class LessonAdmin(object):
     list_display = ['course', 'name', 'create_time']
     search_fields = ['course', 'name']
@@ -75,7 +119,7 @@ class CourseResourceAdmin(object):
     show_bookmarks = False
 
 
-xadmin.site.register(Course, CourseAdmin)
+xadmin.site.register(Course, NewCourseAdmin)
 xadmin.site.register(Lesson, LessonAdmin)
 xadmin.site.register(Video, VideoAdmin)
 xadmin.site.register(CourseResource, CourseResourceAdmin)

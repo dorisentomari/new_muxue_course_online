@@ -131,13 +131,15 @@ STATIC_URL = '/static/'
 
 MEDIA_URL = '/media/'
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-
 # 可选配置属性，属性值为列表或元组，每个元素代表一个静态资源文件夹，可自行命名
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
     os.path.join(BASE_DIR, 'media'),
 ]
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 EMAIL_HOST = EMAIL_INFO['EMAIL_HOST']
 

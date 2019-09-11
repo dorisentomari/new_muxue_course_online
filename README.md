@@ -1,5 +1,7 @@
 # 1. new_muxue_course_online
 + 在线地址: [new_muxue_course_online](http://pa.ikite.top/)
++ 测试账户: 账号: `test`，密码: `testtest`
++ 注: 实际登录用户名长度必须不能小于 6 位
 
 # 2. 项目文档说明
 + [01-基本环境搭建](https://github.com/dawnight/new_muxue_course_online/blob/master/docs/01-%E5%9F%BA%E6%9C%AC%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA.md)

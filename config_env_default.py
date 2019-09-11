@@ -1,9 +1,9 @@
 # -*- encoding: utf-8 -*-
 
 MYSQL_INFO = {
-    'NAME': 'muxue_course',
+    'NAME': 'new_muxue_course',
     'USER': 'root',
-    'PASSWORD': '123456',
+    'PASSWORD': '',
     'HOST': '127.0.0.1',
 }
 
@@ -14,4 +14,9 @@ EMAIL_INFO = {
     'EMAIL_HOST_PASSWORD': '',
     'EMAIL_USE_TLS': False,
     'EMAIL_FROM': '',
+}
+
+REDIS_INFO = {
+    'REDIS_HOST': '127.0.0.1',
+    'REDIS_PORT': 6379
 }

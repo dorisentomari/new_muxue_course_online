@@ -1,15 +1,10 @@
-# 1. new_muxue_course_online
-+ 在线地址: [new_muxue_course_online](http://pa.ikite.top/)
-+ 测试账户: 账号: `test`，密码: `testtest`
-+ 注: 实际登录用户名长度必须不能小于 6 位
-
-# 2. 项目启动
+# 1. 项目启动
 + 安装依赖 `pip install -r requirements.txt`
 + 创建 `config_env.py`，内容和 `config_env_default.py` 的内容一样就可以。或者是修改 `settings.py` 文件里引用的 `config_env.py` 为 `config_env_default.py` 即可
 + 启动项目 `python manage.py runserver`
 
 
-# 3. 项目文档说明
+# 2. 项目文档说明
 + [01-基本环境搭建](https://github.com/dawnight/new_muxue_course_online/blob/master/docs/01-%E5%9F%BA%E6%9C%AC%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA.md)
 + [02-创建app](https://github.com/dawnight/new_muxue_course_online/blob/master/docs/02-%E5%88%9B%E5%BB%BAapp.md)
 + [03-models](https://github.com/dawnight/new_muxue_course_online/blob/master/docs/03-models.md)
@@ -21,7 +16,7 @@
 + [问题记录](https://github.com/dawnight/new_muxue_course_online/blob/master/docs/%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95.md)
 
 
-# 4. Django 学习资料
+# 3. Django 学习资料
 + [Django 源码学习](https://yijingping.github.io/2014/03/12/django-1.html)
 + [Django 2 By Example](http://www.conyli.cc/chapter01.html)
 + [Django2.2教程](http://www.liujiangblog.com/)

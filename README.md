@@ -22,3 +22,4 @@
 + [Django2.2教程](http://www.liujiangblog.com/)
 + [xadmin的变量](http://www.lybbn.cn/data/bbsdatas.php?lybbs=62)
 + [session和cookie](https://www.zhihu.com/question/19786827)
++ [Django 中文翻译书籍](http://djangobook.py3k.cn/2.0/)
